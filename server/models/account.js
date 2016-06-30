@@ -10,7 +10,7 @@ const Account = new Schema({
 });
 
 Account.methods.generateHash = function(password) {
-    return bcypt.hashSync(password, 8);
+    return bcrypt.hashSync(password, 8);
 };
 
 Account.methods.validateHash = function(hash) {

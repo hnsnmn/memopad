@@ -36,8 +36,13 @@ app.use(session({
 /* setup routers & static directory */
 import api from './routes';
 app.use('/api', api);
-
 app.use('/', express.static(path.join(__dirname, './../public')));
+
+/* handle error */
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 
 /* listen server */
