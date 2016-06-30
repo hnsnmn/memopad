@@ -4,9 +4,15 @@ import path from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 
+import morgan from 'morgan'; // HTTP REQUEST LOGGER
+import bodyParser from 'body-parser'; // PARSE HTML BODY
+
 const app = express();
 const port = 3000;
 const devPort = 4000;
+
+app.use(morgan('dev'));
+app.use(bodyParser.json());
 
 app.use('/', express.static(path.join(__dirname, './../public')));
 
