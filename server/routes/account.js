@@ -16,4 +16,5 @@ router.get('/getinfo', (req, res) => {
     res.json({ info: null });
 });
 
+
 export default router;

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const Schema = mongoose.Schema;
 
@@ -7,5 +8,13 @@ const Account = new Schema({
     password: String,
     created: { type: Date, default: Date.now }
 });
+
+Account.methods.generateHash = function(password) {
+    return bcypt.hashSync(password, 8);
+};
+
+Account.methods.validateHash = function(hash) {
+    return bcrypt.compareSync(hash, this.password);
+};
 
 export default mongoose.model('account', Account);
