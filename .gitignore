@@ -1,2 +1,5 @@
 node_modules
 .jshintrc
+build
+npm-debug.log
+public/bundle.js
