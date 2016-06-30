@@ -34,7 +34,11 @@ app.use(session({
 
 
 /* setup routers & static directory */
+import api from './routes';
+app.use('/api', api);
+
 app.use('/', express.static(path.join(__dirname, './../public')));
+
 
 /* listen server */
 app.listen(port, () => {
