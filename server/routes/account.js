@@ -39,8 +39,11 @@ router.post('/signup', (req, res) => {
         account.password = account.generateHash(account.password);
 
         // SAVE IN THE DATABASE
-        account.save( err => { if(err) throw err; });
-        return res.json({ success: true });
+        account.save( err => {
+            if(err) throw err;
+            return res.json({ success: true });
+        });
+
     });
 });
 
