@@ -3,14 +3,51 @@ import {Link} from 'react-router';
 import {Row, Input, Button} from 'react-materialize';
 
 class Authentication extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: ''
+        };
+
+        this.handleClick = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+        let nextState = {};
+        nextState[e.target.name] = e.target.value;
+        this.setState(nextState);
+    }
+
+
+    handleClick() {
+        if(this.props.mode===0) {
+            /* LOGIN */
+        } else {
+            /* REGISTER */
+        }
+
+    }
+
     render() {
 
         const loginView = (
             <div>
                 <div className="card-content">
                     <Row>
-                        <Input s={12} label="Username" />
-                        <Input s={12} type="password" label="Password" />
+                        <Input s={12}
+                            name="username"
+                            label="Username"
+                            value={this.state.username}
+                            onChange={this.handleChange} />
+                        <Input s={12}
+                            name="password"
+                            type="password"
+                            label="Password"
+                            value={this.state.password}
+                            onChange={this.handleChange}/>
                         <a className="waves-effect waves-light btn">SUBMIT</a>
                     </Row>
                 </div>
@@ -29,9 +66,18 @@ class Authentication extends React.Component {
             <div>
                 <div className="card-content">
                     <Row>
-                        <Input s={12} label="Username" />
-                        <Input s={12} type="password" label="Password" />
-                        <a className="waves-effect waves-light btn">CREATE</a>
+                        <Input s={12}
+                            name="username"
+                            label="Username"
+                            value={this.state.username}
+                            onChange={this.handleChange}/>
+                        <Input s={12}
+                            name="password"
+                            type="password"
+                            label="Password"
+                            value={this.state.password}
+                            onChange={this.handleChange}/>
+                        <a className="waves-effect waves-light btn" onClick={this.handleClick}>CREATE</a>
                     </Row>
                 </div>
             </div>

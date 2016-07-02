@@ -8,7 +8,6 @@ class App extends React.Component {
         /* Check whether current route is login or register using regex */
         let re = /(login|register)/;
         let isAuth = re.test(this.props.location.pathname);
-        console.log(this.props.location.pathname);
 
         return (
             <div>
