@@ -4,6 +4,16 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
 import { App, Login, Register, Home } from 'containers';
 
+import { push, routerMiddleware, syncHistoryWithStore } from 'react-router-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reducers from 'reducers';
+
+
+
+const middleware = routerMiddleware(browserHistory);
+const store = createStore(reducers, applyMiddleware(middleware));
+const history = syncHistoryWithStore(browserHistory, store);
+
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
