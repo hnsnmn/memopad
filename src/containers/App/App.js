@@ -7,7 +7,6 @@ class App extends React.Component {
         return (
             <div>
                 <Header/>
-                <h1>Hello React Skeleton!!</h1>
             </div>
         );
     }
