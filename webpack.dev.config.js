@@ -1,18 +1,19 @@
 var webpack = require('webpack');
- 
+var path = require('path');
+
 module.exports = {
- 
+
     entry: [
         './src/index.js',
         'webpack-dev-server/client?http://0.0.0.0:4000',
         'webpack/hot/only-dev-server'
     ],
- 
+
     output: {
         path: '/',
         filename: 'bundle.js'
     },
- 
+
     devServer: {
         hot: true,
         filename: 'bundle.js',
@@ -31,14 +32,14 @@ module.exports = {
           timings: false,
           chunks: false,
           chunkModules: false
-        } 
+        }
     },
 
-    
+
     plugins: [
         new webpack.HotModuleReplacementPlugin()
     ],
- 
+
     module: {
         loaders: [
             {
@@ -50,6 +51,10 @@ module.exports = {
                 exclude: /node_modules/,
             }
         ]
+    },
+
+    resolve: {
+        root: path.resolve('./src')
     }
 
 
