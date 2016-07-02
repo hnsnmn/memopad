@@ -19,7 +19,8 @@
     "path": "^0.12.7",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
-    "react-materialize": "^0.14.4"
+    "react-materialize": "^0.14.4",
+    "react-router": "^2.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.9.1",
