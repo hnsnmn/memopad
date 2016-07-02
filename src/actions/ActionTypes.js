@@ -1,2 +1,5 @@
-export const AUTH_LOGIN = "AUTH_LOGIN";
-export const AUTH_REGISTER = "AUTH_REGISETER";
+export const AUTH_LOGIN_REQ = "AUTH_LOGIN_REQ";
+export const AUTH_LOGIN_RCV = "AUTH_LOGIN_RECV";
+
+export const AUTH_REGISTER_REQ = "AUTH_REGISTER_REQ";
+export const AUTH_REGISTER_RCV = "AUTH_REGISTER_RCV";
