@@ -7,7 +7,7 @@ class Header extends React.Component {
         return (
             <nav>
                 <div className="nav-wrapper blue darken-1">
-                    <a href="#" className="brand-logo center">THEMEMO</a>
+                    <a href="#" className="brand-logo center">MEMOPAD</a>
 
                     <ul>
                         <li><a href="#"><i className="material-icons">search</i></a></li>

@@ -4,7 +4,7 @@ import { Authentication } from 'components';
 class Login extends React.Component {
     render() {
         return (
-            <Authentication/>
+            <Authentication mode={0}/>
         );
     }
 }
