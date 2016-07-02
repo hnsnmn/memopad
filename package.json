@@ -15,7 +15,6 @@
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.2",
     "express-session": "^1.13.0",
-    "fetch": "^1.1.0",
     "mongoose": "^4.5.2",
     "path": "^0.12.7",
     "react": "^15.1.0",
