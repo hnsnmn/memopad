@@ -10,6 +10,7 @@ import morgan from 'morgan'; // HTTP REQUEST LOGGER
 import bodyParser from 'body-parser'; // PARSE HTML BODY
 import session from 'express-session';
 
+
 const app = express();
 const port = 3000;
 const devPort = 4000;
@@ -37,6 +38,9 @@ app.use(session({
 import api from './routes';
 app.use('/api', api);
 app.use('/', express.static(path.join(__dirname, './../public')));
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname, './../public/index.html'));
+});
 
 /* handle error */
 app.use(function(err, req, res, next) {
