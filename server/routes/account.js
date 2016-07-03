@@ -73,7 +73,7 @@ router.post('/signin', (req, res) => {
             username: account.username
         };
 
-        res.json({
+        return res.json({
             success: true
         });
     });
@@ -85,7 +85,7 @@ router.get('/getinfo', (req, res) => {
 
 router.post('/logout', (req, res) => {
     req.session.destroy(err => { if(err) throw err; });
-    res.json({ sucess: true });
+    return res.json({ sucess: true });
 });
 
 
