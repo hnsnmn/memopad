@@ -62,6 +62,7 @@ class Authentication extends React.Component {
                     </Row>
                 </div>
 
+
                 <div className="footer">
                     <div className="card-content">
                         <div className="right"
