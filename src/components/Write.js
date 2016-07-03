@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { memoPostRequest } from 'actions/memo';
 
 class Write extends React.Component {
 
@@ -9,6 +11,8 @@ class Write extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
     handleChange(e) {
@@ -17,18 +21,41 @@ class Write extends React.Component {
         });
     }
 
+    handleClick() {
+        this.props.dispatch(memoPostRequest(this.state.contents)).then(
+            () => {
+                if(this.props.status === 'SUCCESS'){
+                    Materialize.toast('Posted Successfully!', 4000);
+                    this.setState({
+                        contents: ""
+                    });
+                }
+            }
+        );
+    }
+
+    handleKeyDown(e) {
+        if( e.ctrlKey && e.keyCode == 13) {
+            console.log("CTRL+ENTER is PRESSED");
+            this.handleClick();
+        }
+    }
+
     render() {
         return (
             <div className="container write">
                 <div className="card">
                     <div className="card-content">
-                        <textarea className="materialize-textarea"
+                        <textarea className="materialize-textarea tooltipped"
                             onChange={this.handleChange}
+                            onKeyDown={this.handleKeyDown}
                             value={this.state.contents}
-                            placeholder="Write down your memo"></textarea>
+                            placeholder="Write down your memo"
+                            data-delay="50"
+                            data-tooltip="Press [CTRL + ENTER] to post your memo"></textarea>
                     </div>
                     <div className="card-action">
-                      <a href="#" className="">POST</a>
+                      <a href="#" onClick={this.handleClick}>POST</a>
                     </div>
                 </div>
             </div>
@@ -36,4 +63,10 @@ class Write extends React.Component {
     }
 }
 
-export default Write;
+const mapStateToProps = (state) => {
+    return {
+        status: state.memo.post.status
+    };
+};
+
+export default connect(mapStateToProps)(Write);
