@@ -31,6 +31,19 @@ a.logo {
     margin: 0 auto;
 }
 
+
+@media screen and (max-width: 480px) {
+  .auth .card {
+    width: 100%;
+  }
+
+  .logo {
+    font-size: 60px;
+  }
+}
+
+
+
 .auth .header {
     font-size: 18px;
 }

@@ -80,6 +80,12 @@ router.post('/signin', (req, res) => {
 });
 
 router.get('/getinfo', (req, res) => {
+    if(typeof req.session.loginInfo === "undefined") {
+        return res.status(401).json({
+            error: 1
+        });
+    }
+    
     res.json({ info: req.session.loginInfo });
 });
 

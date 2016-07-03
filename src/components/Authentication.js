@@ -2,7 +2,10 @@ import React from 'react';
 import {Link} from 'react-router';
 import {Row, Input, Button} from 'react-materialize';
 import { connect } from 'react-redux';
-import { login } from 'actions/authentication';
+import { loginRequest, registerRequest } from 'actions/authentication';
+
+import { browserHistory } from 'react-router';
+
 
 class Authentication extends React.Component {
 
@@ -16,6 +19,7 @@ class Authentication extends React.Component {
 
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     handleChange(e) {
@@ -29,16 +33,61 @@ class Authentication extends React.Component {
         if(this.props.mode===0) {
             /* LOGIN */
 
-            this.props.dispatch(login(this.state.username, this.state.password)).then(
+            this.props.dispatch(loginRequest(this.state.username, this.state.password)).then(
                 () => {
-                    console.log(this.props.loginResponse);
+                    if(this.props.loginStatus.status === "SUCCESS") {
+                        let loginData = {
+                            isLoggedIn: true,
+                            username: this.props.currentUser
+                        };
+
+                        sessionStorage.loginData = JSON.stringify(loginData);
+
+                        Materialize.toast('Welcome, ' + this.props.currentUser + '!', 2000);
+                        browserHistory.push('/');
+                    }else {
+                        let $toastContent = $('<span style="color: #FFB4BA">Incorrect username or password</span>');
+                        Materialize.toast($toastContent, 2000);
+                        this.setState({
+                            password: ''
+                        });
+                        this.loginPassword.focus();
+                    }
                 }
             );
 
         } else {
             /* REGISTER */
+            this.props.dispatch(registerRequest(this.state.username, this.state.password)).then(
+                () => {
+                    if(this.props.registerStatus.status === "SUCCESS") {
+                        Materialize.toast('Success! Please Log in', 2000);
+                        browserHistory.push('/login');
+                    } else {
+                        const errorMessage = [
+                            'Bad Username',
+                            'Password is too short',
+                            'Username already exists',
+                        ];
+
+                        let $toastContent = $('<span style="color: #FFB4BA">' + errorMessage[this.props.registerStatus.error - 1] + '</span>');
+                        Materialize.toast($toastContent, 2000);
+                        this.setState({
+                            username: '',
+                            password: ''
+                        });
+                    }
+                }
+            );
+
         }
 
+    }
+
+    handleKeyPress(e) {
+        if(e.charCode==13) {
+            this.handleClick();
+        }
     }
 
     render() {
@@ -57,7 +106,11 @@ class Authentication extends React.Component {
                             type="password"
                             label="Password"
                             value={this.state.password}
-                            onChange={this.handleChange}/>
+                            onChange={this.handleChange}
+                            ref= { (ref) => {
+                                this.loginPassword = ref;
+                            }}
+                            onKeyPress={this.handleKeyPress}/>
                         <a className="waves-effect waves-light btn" onClick={this.handleClick}>SUBMIT</a>
                     </Row>
                 </div>
@@ -81,13 +134,20 @@ class Authentication extends React.Component {
                             name="username"
                             label="Username"
                             value={this.state.username}
-                            onChange={this.handleChange}/>
+                            onChange={this.handleChange}
+                            ref= { (ref) => {
+                                this.registerUsername = ref;
+                            }}/>
                         <Input s={12}
                             name="password"
                             type="password"
                             label="Password"
                             value={this.state.password}
-                            onChange={this.handleChange}/>
+                            onChange={this.handleChange}
+                            ref= { (ref) => {
+                                this.registerPassword = ref;
+                            }}
+                            onKeyPress={this.handleKeyPress}/>
                         <a className="waves-effect waves-light btn" onClick={this.handleClick}>CREATE</a>
                     </Row>
                 </div>
@@ -112,7 +172,9 @@ class Authentication extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginResponse: state.loginResponse
+        loginStatus: state.authentication.login,
+        registerStatus: state.authentication.register,
+        currentUser: state.authentication.status.currentUser
     };
 };
 
