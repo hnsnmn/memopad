@@ -5,9 +5,16 @@ import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
 import { App, Login, Register, Home } from 'containers';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import reducers from 'reducers';
+import thunk from 'redux-thunk';
+
 
 const rootElement = document.getElementById('root');
+const store = createStore(reducers, applyMiddleware(thunk));
+
+
 ReactDOM.render(
+    <Provider store={store}>
         <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={Home}/>
@@ -15,4 +22,5 @@ ReactDOM.render(
                 <Route path="login" component={Login}/>
                 <Route path="register" component={Register}/>
             </Route>
-        </Router>, rootElement);
+        </Router>
+    </Provider>, rootElement);

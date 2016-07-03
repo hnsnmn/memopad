@@ -1,11 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {Row, Input, Button} from 'react-materialize';
+import { connect } from 'react-redux';
+import { login } from 'actions/authentication';
 
 class Authentication extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             username: '',
             password: ''
@@ -25,6 +28,13 @@ class Authentication extends React.Component {
     handleClick() {
         if(this.props.mode===0) {
             /* LOGIN */
+
+            this.props.dispatch(login(this.state.username, this.state.password)).then(
+                () => {
+                    console.log(this.props.loginResponse);
+                }
+            );
+
         } else {
             /* REGISTER */
         }
@@ -48,7 +58,7 @@ class Authentication extends React.Component {
                             label="Password"
                             value={this.state.password}
                             onChange={this.handleChange}/>
-                        <a className="waves-effect waves-light btn">SUBMIT</a>
+                        <a className="waves-effect waves-light btn" onClick={this.handleClick}>SUBMIT</a>
                     </Row>
                 </div>
 
@@ -99,4 +109,10 @@ class Authentication extends React.Component {
     }
 }
 
-export default Authentication;
+const mapStateToProps = (state) => {
+    return {
+        loginResponse: state.loginResponse
+    };
+};
+
+export default connect(mapStateToProps)(Authentication);
