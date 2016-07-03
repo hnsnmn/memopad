@@ -19,7 +19,7 @@ class Header extends React.Component {
                     isLoggedIn: false,
                     username: ''
                 };
-                sessionStorage.loginData = JSON.stringify(loginData);
+                document.cookie= 'key=' + btoa(JSON.stringify(loginData));
             }
         );
     }

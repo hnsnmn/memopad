@@ -8,12 +8,21 @@ import { getStatusRequest } from 'actions/authentication';
 class App extends React.Component {
 
     componentDidMount() {
-        let loginData = sessionStorage.loginData;
+
+        // get cookie by name
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+
+        let loginData = getCookie('key');
+
         // loginData is empty: do nothing
         if(typeof loginData === "undefined") return;
 
-        // parse loginData to JSON object
-        loginData = JSON.parse(loginData);
+        // decrypt base64 then parse to JSON object
+        loginData = JSON.parse(atob(loginData));
 
         // if it is not logged in, do nothing
         if(!loginData.isLoggedIn) return;
@@ -30,7 +39,7 @@ class App extends React.Component {
                     let $toastContent = $('<span style="color: #FFB4BA">Your session is expired, please log in again</span>');
                     Materialize.toast($toastContent, 4000);
 
-                    sessionStorage.loginData = JSON.stringify(loginData);
+                    document.cookie='key=' + btoa(JSON.stringify(loginData));
                 }
             }
         );

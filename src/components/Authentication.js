@@ -41,7 +41,7 @@ class Authentication extends React.Component {
                             username: this.props.currentUser
                         };
 
-                        sessionStorage.loginData = JSON.stringify(loginData);
+                        document.cookie= 'key=' + btoa(JSON.stringify(loginData));
 
                         Materialize.toast('Welcome, ' + this.props.currentUser + '!', 2000);
                         browserHistory.push('/');
