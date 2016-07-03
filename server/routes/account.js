@@ -83,8 +83,9 @@ router.get('/getinfo', (req, res) => {
     res.json({ info: req.session.loginInfo });
 });
 
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
     req.session.destroy(err => { if(err) throw err; });
+    res.json({ sucess: true });
 });
 
 
