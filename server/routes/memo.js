@@ -132,11 +132,24 @@ router.delete('/:id', (req, res) => {
 });
 
 // GET MEMO LIST
-router.get('/list', (req, res) => {
+router.get('/list/:page', (req, res) => {
+    /*
     Memo.find((err, memos) => {
         if(err) throw err;
         res.json(memos);
     });
+    */
+    let page = parseInt(req.params.page);
+
+    Memo.find()
+    .sort({"date.edited": -1})
+    .skip((page-1) * 5)
+    .limit(5)
+    .exec((err, memos) => {
+        if(err) throw err;
+        res.json(memos);
+    });
+
 });
 
 export default router;
