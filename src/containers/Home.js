@@ -1,11 +1,11 @@
 import React from 'react';
-
+import { Write } from 'components';
 
 class Home extends React.Component {
     render() {
         return (
             <div>
-                <h1>Home</h1>
+                    <Write/>
             </div>
         );
     }
