@@ -30,7 +30,8 @@ export default function memo(state, action) {
         case types.MEMO_POST_FAILURE:
             return update(state, {
                 post: {
-                    status: { $set: 'ERROR' }
+                    status: { $set: 'ERROR' },
+                    error: action.error
                 }
             });
         default:
