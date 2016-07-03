@@ -1,14 +1,21 @@
 import React from 'react';
 import { Write } from 'components';
+import { connect } from 'react-redux';
 
 class Home extends React.Component {
     render() {
         return (
             <div>
-                    <Write/>
+                    { this.props.isLoggedIn ? ( <Write/> ) : (<div/>) }
             </div>
         );
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        isLoggedIn: state.authentication.status.isLoggedIn
+    };
+};
+
+export default connect(mapStateToProps)(Home);

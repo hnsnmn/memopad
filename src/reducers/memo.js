@@ -1,5 +1,5 @@
-
 import * as types from 'actions/ActionTypes';
+import update from 'react-addons-update';
 
 const initialState = {
     post: {
@@ -15,11 +15,24 @@ export default function memo(state, action) {
 
     switch(action.type) {
         case types.MEMO_POST:
-            return state;
+            return update(state, {
+                post: {
+                    status: { $set: 'WAITING' },
+                    error: { $set: '-1' }
+                }
+            });
         case types.MEMO_POST_SUCCESS:
-            return state;
+            return update(state, {
+                post: {
+                    status: { $set: 'SUCCESS' }
+                }
+            });
         case types.MEMO_POST_FAILURE:
-            return state;
+            return update(state, {
+                post: {
+                    status: { $set: 'ERROR' }
+                }
+            });
         default:
             return state;
     }
