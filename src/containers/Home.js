@@ -1,5 +1,5 @@
 import React from 'react';
-import { Write } from 'components';
+import { Write, Memo } from 'components';
 import { connect } from 'react-redux';
 
 class Home extends React.Component {
@@ -7,6 +7,7 @@ class Home extends React.Component {
         return (
             <div>
                     { this.props.isLoggedIn ? ( <Write/> ) : (<div/>) }
+                    <Memo/>
             </div>
         );
     }
