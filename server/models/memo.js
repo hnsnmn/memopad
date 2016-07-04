@@ -9,7 +9,8 @@ const Memo = new Schema({
     date: {
         created: { type: Date, default: Date.now },
         edited: { type: Date, default: Date.now }
-    }
+    },
+    is_edited: { type: Boolean, default: false }
 });
 
 export default mongoose.model('memo', Memo);

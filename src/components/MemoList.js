@@ -4,57 +4,74 @@ import { Memo } from 'components';
 
 var mockData = [
   {
-    "_id": "577a7ea8a62ccc8013e9e59f",
-    "writer": "velopert",
-    "contents": "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain.",
+    "_id": "577a89075a1d8da021afe4f4",
+    "writer": "velo",
+    "contents": "I think 6 might be better",
     "__v": 0,
+    "is_edited": false,
     "date": {
-      "edited": "2016-07-04T15:20:08.103Z",
-      "created": "2016-07-04T15:20:08.102Z"
+      "edited": "2016-07-04T16:04:23.630Z",
+      "created": "2016-07-04T16:04:23.630Z"
     },
     "starred": []
   },
   {
-    "_id": "577a7e9ca62ccc8013e9e59e",
+    "_id": "577a86524120e928080c8c51",
     "writer": "velopert",
-    "contents": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.",
+    "contents": "LISTEN!",
     "__v": 0,
+    "is_edited": true,
     "date": {
-      "edited": "2016-07-04T15:19:56.015Z",
-      "created": "2016-07-04T15:19:56.015Z"
+      "edited": "2016-07-04T15:56:03.877Z",
+      "created": "2016-07-04T15:52:50.825Z"
     },
     "starred": []
   },
   {
-    "_id": "577a7e8da62ccc8013e9e59d",
+    "_id": "577a864c4120e928080c8c50",
     "writer": "velopert",
-    "contents": "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system,",
+    "contents": "Blow up my horn\n",
     "__v": 0,
+    "is_edited": false,
     "date": {
-      "edited": "2016-07-04T15:19:41.664Z",
-      "created": "2016-07-04T15:19:41.664Z"
+      "edited": "2016-07-04T15:52:44.338Z",
+      "created": "2016-07-04T15:52:44.338Z"
     },
     "starred": []
   },
   {
-    "_id": "577a7e86a62ccc8013e9e59c",
+    "_id": "577a86454120e928080c8c4f",
     "writer": "velopert",
-    "contents": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+    "contents": "Come on",
     "__v": 0,
+    "is_edited": false,
     "date": {
-      "edited": "2016-07-04T15:19:34.365Z",
-      "created": "2016-07-04T15:19:34.365Z"
+      "edited": "2016-07-04T15:52:37.792Z",
+      "created": "2016-07-04T15:52:37.792Z"
     },
     "starred": []
   },
   {
-    "_id": "577a7e7aa62ccc8013e9e59b",
+    "_id": "577a86434120e928080c8c4e",
     "writer": "velopert",
-    "contents": "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+    "contents": "Hmmm",
     "__v": 0,
+    "is_edited": false,
     "date": {
-      "edited": "2016-07-04T15:19:22.486Z",
-      "created": "2016-07-04T15:19:22.486Z"
+      "edited": "2016-07-04T15:52:35.272Z",
+      "created": "2016-07-04T15:52:35.272Z"
+    },
+    "starred": []
+  },
+  {
+    "_id": "577a86414120e928080c8c4d",
+    "writer": "velopert",
+    "contents": "I guess i should sleep..",
+    "__v": 0,
+    "is_edited": false,
+    "date": {
+      "edited": "2016-07-04T15:52:33.505Z",
+      "created": "2016-07-04T15:52:33.504Z"
     },
     "starred": []
   }

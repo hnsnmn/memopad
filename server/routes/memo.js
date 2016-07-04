@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
 
     // CHECK MEMO ID VALIDITY
-    if(mongoose.Types.ObjectId.isValid(req.params.id)) {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).json({
             error: "INVALID ID",
             code: 0
@@ -75,6 +75,8 @@ router.put('/:id', (req, res) => {
 
         // MODIFY AND SAVE IN DATABASE
         memo.contents = req.body.contents;
+        memo.date.edited = new Date();
+        memo.is_edited = true;
         memo.save(err => {
             if(err) throw err;
             return res.json({
@@ -143,8 +145,8 @@ router.get('/list/:page', (req, res) => {
 
     Memo.find()
     .sort({"date.edited": -1})
-    .skip((page-1) * 5)
-    .limit(5)
+    .skip((page-1) * 6)
+    .limit(6)
     .exec((err, memos) => {
         if(err) throw err;
         res.json(memos);

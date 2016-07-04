@@ -6,12 +6,7 @@ class Memo extends React.Component {
 
     render() {
 
-        let date = {
-            created: (new Date(this.props.data.date.created)).setMilliseconds(0),
-            edited: (new Date(this.props.data.date.edited)).setMilliseconds(0),
-        };
-
-        let action = (date.created != date.edited) ? 'edited' : 'wrote';
+        let action = (this.props.data.is_edited) ? 'edited' : 'wrote';
 
         let postOptionsVisibility = (this.props.data.writer == this.props.currentUser) ? 'visible' : 'hidden';
 
