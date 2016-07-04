@@ -20,6 +20,9 @@ class Memo extends React.Component {
                     <div className="card-content">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </div>
+                    <div className="footer">
+                        <i className="material-icons log-footer-icon star icon-button star-starred">star</i>
+                    </div>
                 </div>
             </div>
         );
