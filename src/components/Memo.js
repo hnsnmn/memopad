@@ -1,7 +1,6 @@
 import React from 'react';
 import { Dropdown, NavItem } from 'react-materialize';
 
-
 class Memo extends React.Component {
 
     render() {
@@ -21,7 +20,7 @@ class Memo extends React.Component {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </div>
                     <div className="footer">
-                        <i className="material-icons log-footer-icon star icon-button star-starred">star</i>
+                        <i className="material-icons log-footer-icon star icon-button star-starred">star</i><span className="star-count">4</span>
                     </div>
                 </div>
             </div>

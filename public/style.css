@@ -111,5 +111,25 @@ a.logo {
 
 .memo .footer {
     border-top: 1px solid #ECECEC;
-    padding: 10px 20px 5px;
+    height: 45px;
+}
+
+.star {
+    position: fixed;
+    left: 15px;
+    top: 11px;
+}
+.star-starred {
+  color: #ff9800 ;
+  position: relative;
+}
+
+.star-count {
+    position: relative;
+    left: 20px;
+    top: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #777;
+    cursor: pointer;
 }
