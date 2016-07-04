@@ -5,7 +5,7 @@ import TimeAgo from 'react-timeago';
 class Memo extends React.Component {
 
     render() {
-
+        console.log(this.props.data);
         let action = (this.props.data.date.created != this.props.data.date.edited) ? 'edited' : 'wrote';
 
         let postOptionsVisibility = (this.props.data.writer == this.props.currentUser) ? 'visible' : 'hidden';
