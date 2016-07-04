@@ -1,6 +1,6 @@
 import React from 'react';
-import { Dropdown, NavItem } from 'react-materialize';
 import { connect } from 'react-redux';
+import TimeAgo from 'react-timeago';
 
 class Memo extends React.Component {
 
@@ -8,20 +8,18 @@ class Memo extends React.Component {
 
         let action = (this.props.data.date.created != this.props.data.date.edited) ? 'edited' : 'wrote';
 
-        let showPostOptions = () => {
-            if(this.props.data.writer === this.props.currentUser) {
-                return (
-                    <div className="right">
-                        <Dropdown trigger={<div><i className="material-icons icon-button">more_vert</i></div>}>
-                            <NavItem>Edit</NavItem>
-                            <NavItem>Remove</NavItem>
-                        </Dropdown>
-                    </div>
-                );
-            } else {
-                return '';
-            }
-        };
+        let postOptionsVisibility = (this.props.data.writer == this.props.currentUser) ? 'visible' : 'hidden';
+
+        let postOptions = (this.props.data.writer === this.props.currentUser) ? (
+            <div className="right">
+                <a className='dropdown-button' id={'dropdown-button-'+this.props.data._id} data-activates={'dropdown-'+this.props.data._id}><i className="material-icons icon-button">more_vert</i></a>
+
+                <ul id={'dropdown-'+this.props.data._id} className='dropdown-content'>
+                  <li><a>Edit</a></li>
+                  <li><a>Remove</a></li>
+                </ul>
+            </div>
+        ) : '';
 
         let multiLineContents = this.props.data.contents.split('\n').map(
                 (line, i) => {
@@ -36,13 +34,12 @@ class Memo extends React.Component {
         let isStarred = (this.props.data.starred.indexOf(this.props.currentUser) > -1) ? { color: '#ff9980' } : {} ;
 
 
-
         return(
             <div className="container memo">
                 <div className="card">
                     <div className="info">
-                        <span className="username">{this.props.data.writer}</span> {action} a log · 2 hours ago
-                        {showPostOptions()}
+                        <span className="username">{this.props.data.writer}</span> {action} a log · <TimeAgo date={this.props.data.date.edited} live={false}/>
+                        {postOptions}
                     </div>
                     <div className="card-content">
                         {multiLineContents}
@@ -54,7 +51,21 @@ class Memo extends React.Component {
             </div>
         );
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        $('#dropdown-button-'+this.props.data._id).dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrain_width: false, // Does not change width of dropdown to that of the activator
+            hover: false, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: true, // Displays dropdown below the button
+            alignment: 'left' // Displays dropdown with edge aligned to the left of button
+        });
+    }
 }
+
+
 
 const mapStateToProps = (state) => {
     return {

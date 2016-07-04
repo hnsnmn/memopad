@@ -55,7 +55,9 @@ class App extends React.Component {
         return (
             <div>
                 { !isAuth ? (<Header/>) : (<div/>) }
-                { this.props.children }
+                <div className="wrapper">
+                    { this.props.children }
+                </div>
             </div>
         );
     }

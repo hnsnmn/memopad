@@ -2,9 +2,12 @@ body {
     background-color: #ECEFF1;
 }
 
+.wrapper {
+    margin-top: 20px;
+}
+
 /* Authentication */
 .auth {
-    margin-top: 100px;
     text-align: center;
 }
 
