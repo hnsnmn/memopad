@@ -4,11 +4,16 @@ import { Dropdown, NavItem } from 'react-materialize';
 class Memo extends React.Component {
 
     render() {
+        let isEdited = () => {
+            return this.props.data.date.created != this.props.data.date.edited;
+        };
+
+
         return(
             <div className="container memo">
                 <div className="card">
                     <div className="info">
-                        <span className="username">velopert</span> wrote a log · 2 hours ago
+                        <span className="username">{this.props.data.writer}</span> wrote a log · 2 hours ago
                         <div className="right">
                             <Dropdown trigger={<div><i className="material-icons icon-button">more_vert</i></div>}>
                                 <NavItem>Edit</NavItem>
@@ -29,3 +34,17 @@ class Memo extends React.Component {
 }
 
 export default Memo;
+
+/*
+{
+    "_id": "577a64ff950f069406ec9f98",
+    "writer": "velo",
+    "contents": "i can't take my eyes~~~~ of .. you!\nhey\nhey\nhey",
+    "__v": 0,
+    "date": {
+      "edited": "2016-07-04T13:30:39.082Z",
+      "created": "2016-07-04T13:30:39.082Z"
+    },
+    "starred": ['velo', 'anymore', 'pert']
+  }
+*/
