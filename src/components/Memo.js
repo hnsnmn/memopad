@@ -1,31 +1,54 @@
 import React from 'react';
 import { Dropdown, NavItem } from 'react-materialize';
+import { connect } from 'react-redux';
 
 class Memo extends React.Component {
 
     render() {
-        let isEdited = () => {
-            return this.props.data.date.created != this.props.data.date.edited;
+
+        let action = (this.props.data.date.created != this.props.data.date.edited) ? 'edited' : 'wrote';
+
+        let showPostOptions = () => {
+            if(this.props.data.writer === this.props.currentUser) {
+                return (
+                    <div className="right">
+                        <Dropdown trigger={<div><i className="material-icons icon-button">more_vert</i></div>}>
+                            <NavItem>Edit</NavItem>
+                            <NavItem>Remove</NavItem>
+                        </Dropdown>
+                    </div>
+                );
+            } else {
+                return '';
+            }
         };
+
+        let multiLineContents = this.props.data.contents.split('\n').map(
+                (line, i) => {
+                    return (
+                        <span key={i}>{line}<br/></span>
+                    );
+                }
+        );
+
+        let starCount = this.props.data.starred.length;
+
+        let isStarred = (this.props.data.starred.indexOf(this.props.currentUser) > -1) ? { color: '#ff9980' } : {} ;
+
 
 
         return(
             <div className="container memo">
                 <div className="card">
                     <div className="info">
-                        <span className="username">{this.props.data.writer}</span> wrote a log · 2 hours ago
-                        <div className="right">
-                            <Dropdown trigger={<div><i className="material-icons icon-button">more_vert</i></div>}>
-                                <NavItem>Edit</NavItem>
-                                <NavItem>Remove</NavItem>
-                            </Dropdown>
-                        </div>
+                        <span className="username">{this.props.data.writer}</span> {action} a log · 2 hours ago
+                        {showPostOptions()}
                     </div>
                     <div className="card-content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        {multiLineContents}
                     </div>
                     <div className="footer">
-                        <i className="material-icons log-footer-icon star icon-button star-starred">star</i><span className="star-count">4</span>
+                        <i className="material-icons log-footer-icon star icon-button" style={isStarred}>star</i><span className="star-count">{starCount}</span>
                     </div>
                 </div>
             </div>
@@ -33,7 +56,12 @@ class Memo extends React.Component {
     }
 }
 
-export default Memo;
+const mapStateToProps = (state) => {
+    return {
+        currentUser: state.authentication.status.currentUser
+    };
+};
+export default connect(mapStateToProps)(Memo);
 
 /*
 {

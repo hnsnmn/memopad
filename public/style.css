@@ -115,13 +115,12 @@ a.logo {
 }
 
 .star {
-    position: fixed;
+    position: relative;
     left: 15px;
     top: 11px;
 }
 .star-starred {
-  color: #ff9800 ;
-  position: relative;
+
 }
 
 .star-count {
