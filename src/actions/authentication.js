@@ -141,7 +141,7 @@ export function getStatusRequest() {
 
         return axios.get('/api/account/getInfo')
         .then((response) => {
-            return dispatch(getStatusSuccess(response.data.username));
+            return dispatch(getStatusSuccess(response.data.info.username));
         }).catch((error) => {
             return dispatch(getStatusFailure());
         });
