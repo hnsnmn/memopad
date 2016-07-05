@@ -31,13 +31,21 @@ class Write extends React.Component {
                         contents: ""
                     });
                 } else {
-                    if(this.props.error === 1) {
-                        let $toastContent = $('<span style="color: #FFB4BA">Your session is expired, please log in again</span>');
-                        Materialize.toast($toastContent, 4000);
-                        browserHistory.push('/');
-                    } else {
-                        let $toastContent = $('<span style="color: #FFB4BA">Something is gone wrong</span>');
-                        Materialize.toast($toastContent, 4000);
+                    let $toastContent;
+
+                    switch(this.props.error) {
+                        case 1:
+                            $toastContent = $('<span style="color: #FFB4BA">Your session is expired, please log in again</span>');
+                            Materialize.toast($toastContent, 4000);
+                            browserHistory.push('/');
+                            break;
+                        case 2:
+                            $toastContent = $('<span style="color: #FFB4BA">Please write something</span>');
+                            Materialize.toast($toastContent, 4000);
+                            break;
+                        default:
+                            $toastContent = $('<span style="color: #FFB4BA">Something is gone wrong</span>');
+                            Materialize.toast($toastContent, 4000);
                     }
                 }
             }
