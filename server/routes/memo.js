@@ -16,6 +16,14 @@ router.post('/', (req, res) => {
         });
     }
 
+    // CHECK LOGIN STATUS
+    if(req.body.contents === "") {
+        return res.status(400).json({
+            error: "CONTENTS EMPTY",
+            code: 2
+        });
+    }
+
     // CREATE NEW MEMO
     let memo = new Memo({
         writer: req.session.loginInfo.username,
@@ -134,18 +142,66 @@ router.delete('/:id', (req, res) => {
 });
 
 // GET MEMO LIST
-router.get('/list/:page', (req, res) => {
+router.get('/list', (req, res) => {
     /*
     Memo.find((err, memos) => {
         if(err) throw err;
         res.json(memos);
     });
     */
-    let page = parseInt(req.params.page);
-
     Memo.find()
-    .sort({"date.edited": -1})
-    .skip((page-1) * 6)
+    .sort({"_id": -1})
+    .limit(6)
+    .exec((err, memos) => {
+        if(err) throw err;
+        res.json(memos);
+    });
+
+});
+
+
+// GET OLDER MEMO LIST
+router.get('/list/old/:id', (req, res) => {
+    /*
+    Memo.find((err, memos) => {
+        if(err) throw err;
+        res.json(memos);
+    });
+    */
+    // CHECK MEMO ID VALIDITY
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 0
+        });
+    }
+
+    let objId = new mongoose.Types.ObjectId(req.params.id);
+
+    Memo.find({ _id: { $lt: objId }})
+    .sort({_id: -1})
+    .limit(6)
+    .exec((err, memos) => {
+        if(err) throw err;
+        res.json(memos);
+    });
+
+});
+
+
+// GET NEWER MEMO LIST
+router.get('/list/new/:id', (req, res) => {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 0
+        });
+    }
+
+    let objId = new mongoose.Types.ObjectId(req.params.id);
+
+    Memo.find({ _id: { $gt: objId }})
+    .sort({_id: -1})
     .limit(6)
     .exec((err, memos) => {
         if(err) throw err;
