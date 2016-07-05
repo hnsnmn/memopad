@@ -21,7 +21,7 @@ export function memoPostRequest(contents) {
             return dispatch(memoPostSuccess());
         }).catch((error) => {
             console.log(error);
-            return dispatch(loginFailure(error.data.code));
+            return dispatch(memoPostFailure(error.data.code));
         });
     };
 }

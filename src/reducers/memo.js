@@ -31,7 +31,7 @@ export default function memo(state, action) {
             return update(state, {
                 post: {
                     status: { $set: 'ERROR' },
-                    error: action.error
+                    error: { $set: action.error }
                 }
             });
         default:
