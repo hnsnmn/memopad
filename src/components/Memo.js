@@ -35,10 +35,10 @@ class Memo extends React.Component {
 
 
         return(
-            <div className="container memo">
+            <div className="container memo fade-and-slide">
                 <div className="card">
                     <div className="info">
-                        <span className="username">{this.props.data.writer}</span> {action} a log · <TimeAgo date={this.props.data.date.edited} live={false}/>
+                        <span className="username">{this.props.data.writer}</span> {action} a log · <TimeAgo date={this.props.data.date.edited} live={true}/>
                         {postOptions}
                     </div>
                     <div className="card-content">
@@ -52,7 +52,7 @@ class Memo extends React.Component {
         );
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidMount() {
         $('#dropdown-button-'+this.props.data._id).dropdown({
             inDuration: 300,
             outDuration: 225,
@@ -62,6 +62,7 @@ class Memo extends React.Component {
             belowOrigin: true, // Displays dropdown below the button
             alignment: 'left' // Displays dropdown with edge aligned to the left of button
         });
+
     }
 }
 

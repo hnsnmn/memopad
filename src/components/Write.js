@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { memoPostRequest } from 'actions/memo';
 import { browserHistory } from 'react-router';
+import { memoListRequest } from 'actions/memo';
 
 class Write extends React.Component {
 
@@ -26,9 +27,18 @@ class Write extends React.Component {
         this.props.dispatch(memoPostRequest(this.state.contents)).then(
             () => {
                 if(this.props.status === 'SUCCESS'){
-                    Materialize.toast('Posted Successfully!', 2000);
-                    this.setState({
-                        contents: ""
+
+                    const reload = () => {if(this.props.data.length===0) {
+                        return this.props.dispatch(memoListRequest(true));
+                    } else {
+                        return this.props.dispatch(memoListRequest(false, 'new', this.props.data[0]._id));
+                    }};
+
+                    reload().then( ()=> {
+                        Materialize.toast('Posted Successfully!', 2000);
+                        this.setState({
+                            contents: ""
+                        });
                     });
                 } else {
                     let $toastContent;
@@ -89,7 +99,8 @@ class Write extends React.Component {
 const mapStateToProps = (state) => {
     return {
         status: state.memo.post.status,
-        error: state.memo.post.error
+        error: state.memo.post.error,
+        data: state.memo.list.data
     };
 };
 

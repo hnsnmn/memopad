@@ -20,10 +20,8 @@ export function memoPostRequest(contents) {
         return axios.post('/api/memo/', {
             contents: contents
         }).then((response) => {
-            console.log(response);
             return dispatch(memoPostSuccess());
         }).catch((error) => {
-            console.log(error);
             return dispatch(memoPostFailure(error.data.code));
         });
     };
