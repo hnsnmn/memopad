@@ -139,7 +139,7 @@ a.logo {
 /* ANIMATION */
 @-webkit-keyframes fade-and-slide {
     0% {
-      opacity: 0;
+      opacity: 0.25;
     }
     100% {
       opacity: 1;
@@ -148,7 +148,7 @@ a.logo {
 
 @keyframes fade-and-slide {
     0% {
-      opacity: 0;
+      opacity: 0.25;
     }
     100% {
       opacity: 1;
@@ -156,8 +156,8 @@ a.logo {
 }
 
 .fade-and-slide {
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
     -webkit-animation-name: fade-and-slide;
     animation-name: fade-and-slide;
 }

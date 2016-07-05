@@ -11,7 +11,34 @@ class Home extends React.Component {
         this.handleMemoList.bind(this);
     }
     componentDidMount() {
-        this.props.dispatch(memoListRequest(true));
+
+        let getNewMemo = () => {
+            this.handleMemoList('new');
+            this.memoLoaderTimeoutId = setTimeout(getNewMemo, 5000);
+        };
+
+        //INITIAL LOAD
+        this.props.dispatch(memoListRequest(true)).then(
+            // ENSURES NOT TO LOAD ADDITIONAL MEMO BEFORE INITIAL LOAD ENDS
+            () => {
+                // LOAD OLDER MEMO WHEN SCROLLED
+                $(window).scroll(() => {
+                    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                        this.handleMemoList('old');
+                    }
+                });
+
+                // IF THERE IS NO SCROLLBAR, LOAD ONE MORE PAGE
+                if ($("body").height() < $(window).height()) {
+                    this.handleMemoList('old');
+                }
+
+                // LOAD NEWER MEO EVERY 5 SECONDS
+                getNewMemo();
+            }
+        );
+
+
     }
 
     handleMemoList(listType) {
@@ -29,12 +56,20 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                    <button onClick={ () => {this.handleMemoList('new'); }}>New</button>
-                    <button onClick={ () => {this.handleMemoList('old'); }}>Old</button>
                     { this.props.isLoggedIn ? ( <Write/> ) : (<div/>) }
                     <MemoList data={this.props.data}/>
             </div>
         );
+    }
+
+    componentWillUnmount() {
+        console.log("UNMOUNTED");
+
+        // REMOVE WINDOWS SCROLL EVENT
+        $(window).unbind();
+
+        // CLEAR TIMEOUT
+        clearTimeout(this.memoLoaderTimeoutId);
     }
 }
 

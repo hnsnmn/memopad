@@ -73,7 +73,6 @@ export default function memo(state, action) {
                         list: {
                             status: { $set: 'SUCCESS' },
                             data: { $unshift: action.data },
-                            isLast: { $set: (action.data.length < 6)}
                         }
                     });
                 }
