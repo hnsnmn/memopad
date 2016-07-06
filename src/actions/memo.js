@@ -6,7 +6,10 @@ import {
     MEMO_POST_FAILURE,
     MEMO_LIST,
     MEMO_LIST_SUCCESS,
-    MEMO_LIST_FAILURE
+    MEMO_LIST_FAILURE,
+    MEMO_REMOVE,
+    MEMO_REMOVE_SUCCESS,
+    MEMO_REMOVE_FAILURE
 } from './ActionTypes';
 
 
@@ -86,5 +89,30 @@ export function memoListFailure(error) {
     return {
         type: MEMO_LIST_FAILURE,
         error
+    };
+}
+
+
+export function memoRemoveRequest(id) {
+    return (dispatch, getState) => {
+
+    };
+}
+
+export function memoRemove(id) {
+    return {
+        type: MEMO_REMOVE
+    };
+}
+
+export function memoRemoveSuccess() {
+    return {
+        type: MEMO_REMOVE_SUCCESS
+    };
+}
+
+export function memoRemoveFailure() {
+    return {
+        type: MEMO_REMOVE_FAILURE
     };
 }
