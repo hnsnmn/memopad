@@ -12,6 +12,10 @@ const initialState = {
         data: [],
         dataMap: [],
         isLast: false
+    },
+    remove: {
+        status: '',
+        error: undefined
     }
 };
 
@@ -87,6 +91,13 @@ export default function memo(state, action) {
                     });
                 }
             }
+            return state;
+
+        case types.MEMO_REMOVE:
+            return state;
+        case types.MEMO_REMOVE_SUCCESS:
+            return state;
+        case types.MEMO_REMOVE_FAILURE:
             return state;
         default:
             return state;
