@@ -26,11 +26,13 @@ class Home extends React.Component {
             () => {
                 // LOAD OLDER MEMO WHEN SCROLLED
                 $(window).scroll(() => {
-                    if ($(document).height() - $(window).height() - $(window).scrollTop() < 160) {
+                    if ($(document).height() - $(window).height() - $(window).scrollTop() < 250) {
                         if(!this.state.loadingState) {
                             this.setState({loadingState: true});
                             this.handleMemoList('old');
                         }
+                    } else {
+                        this.setState({ loadingState: false });
                     }
                 });
 
@@ -53,11 +55,7 @@ class Home extends React.Component {
                 Materialize.toast('You are now reading the last memo', 2000);
                 return;
             }
-            this.props.dispatch(memoListRequest(false, 'old', this.props.data[this.props.data.length-1]._id)).then(
-                ()=> {
-                    this.setState({ loadingState: false });
-                }
-            );
+            this.props.dispatch(memoListRequest(false, 'old', this.props.data[this.props.data.length-1]._id));
         } else {
             this.props.dispatch(memoListRequest(false, 'new', this.props.data[0]._id));
         }
