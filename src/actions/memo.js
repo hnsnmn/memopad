@@ -99,11 +99,11 @@ export function memoRemoveRequest(id) {
 
         return axios.delete('/api/memo/' + id).then(
             (response) => {
-                memoRemoveSuccess(id);
+                dispatch(memoRemoveSuccess(id));
             }
         ).catch(
             (error) => {
-                memoRemoveFailure(error.data.code);
+                dispatch(memoRemoveFailure(error.data.code));
             }
         );
     };
