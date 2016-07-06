@@ -10,6 +10,7 @@ const initialState = {
         status: '',
         error: undefined,
         data: [],
+        dataMap: [],
         isLast: false
     }
 };
@@ -51,11 +52,18 @@ export default function memo(state, action) {
                 }
             });
         case types.MEMO_LIST_SUCCESS:
+            let map = action.data.map(
+                (memo) => {
+                    return memo._id;
+                }
+            );
+
             if(action.isInitial) {
                 return update(state, {
                     list: {
                         status: { $set: 'SUCCESS' },
                         data: { $set: action.data },
+                        dataMap: { $set: map },
                         isLast: { $set: action.data.length < 6 }
                     }
                 });
@@ -65,6 +73,7 @@ export default function memo(state, action) {
                         list: {
                             status: { $set: 'SUCCESS' },
                             data: { $push: action.data },
+                            dataMap: { $push: map },
                             isLast: { $set: (action.data.length < 6)}
                         }
                     });
@@ -73,6 +82,7 @@ export default function memo(state, action) {
                         list: {
                             status: { $set: 'SUCCESS' },
                             data: { $unshift: action.data },
+                            dataMap: { $push: map }
                         }
                     });
                 }
