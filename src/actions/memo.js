@@ -94,7 +94,7 @@ export function memoListFailure(error) {
 
 
 export function memoRemoveRequest(id) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
 
     };
 }
