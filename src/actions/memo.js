@@ -95,24 +95,36 @@ export function memoListFailure(error) {
 
 export function memoRemoveRequest(id) {
     return (dispatch) => {
+        dispatch(memoRemove(id));
 
+        return axios.delete('/api/memo/' + id).then(
+            (response) => {
+                memoRemoveSuccess(id);
+            }
+        ).catch(
+            (error) => {
+                memoRemoveFailure(error.data.code);
+            }
+        );
     };
 }
 
-export function memoRemove(id) {
+export function memoRemove() {
     return {
         type: MEMO_REMOVE
     };
 }
 
-export function memoRemoveSuccess() {
+export function memoRemoveSuccess(id) {
     return {
-        type: MEMO_REMOVE_SUCCESS
+        type: MEMO_REMOVE_SUCCESS,
+        id
     };
 }
 
-export function memoRemoveFailure() {
+export function memoRemoveFailure(error) {
     return {
-        type: MEMO_REMOVE_FAILURE
+        type: MEMO_REMOVE_FAILURE,
+        error
     };
 }
