@@ -41,7 +41,12 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
 
     // CHECK CONTENTS VALID
-    if(typeof res.body.contents === 'undefined' || res.body.contents === "") {
+    if(typeof req.body.contents === 'undefined') {
+        return res.status(400).json({
+            error: "EMPTY CONTENTS",
+            code: 0
+        });
+    } else if(req.body.contents === "") {
         return res.status(400).json({
             error: "EMPTY CONTENTS",
             code: 0

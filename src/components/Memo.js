@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TimeAgo from 'react-timeago';
-import { memoRemoveRequest, memoRemoveFromData } from 'actions/memo';
+import { memoRemoveRequest, memoRemoveFromData, memoEditRequest } from 'actions/memo';
 
 class Memo extends React.Component {
 
@@ -76,7 +76,36 @@ class Memo extends React.Component {
     }
 
     handleEdit() {
-        this.toggleEdit();
+        this.props.dispatch(memoEditRequest(this.props.data._id, this.state.value)).then(
+            () => {
+                if(this.props.edit.status === 'SUCCESS') {
+                    this.toggleEdit();
+                } else {
+
+                    let message;
+                    switch(this.props.remove.error) {
+                        case 0:
+                            message = 'Please write something';
+                            break;
+                        case 1:
+                            message = 'Something is wrong with the memo';
+                            break;
+                        case 2:
+                            message = 'You are not logged in';
+                            break;
+                        case 3:
+                            message = 'That is not your memo';
+                            break;
+                        default:
+                            message = "Something's gone wrong";
+                    }
+
+                    let $toastContent = $('<span style="color: #FFB4BA">' + message + '</span>');
+                    Materialize.toast($toastContent, 2000);
+                    this.toggleEdit();
+                }
+            }
+        );
     }
 
     render() {
@@ -188,7 +217,8 @@ class Memo extends React.Component {
 const mapStateToProps = (state) => {
     return {
         currentUser: state.authentication.status.currentUser,
-        remove: state.memo.remove
+        remove: state.memo.remove,
+        edit: state.memo.edit
     };
 };
 
