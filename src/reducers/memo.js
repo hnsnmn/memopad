@@ -151,7 +151,7 @@ export default function memo(state, action) {
                 }
             });
         case types.MEMO_EDIT_SUCCESS:
-            index = state.list.dataMap.indexOf(acion.id);
+            index = state.list.dataMap.indexOf(action.id);
             return update(state, {
                 edit: {
                     status: { $set: 'SUCCESS' },
