@@ -16,6 +16,11 @@ const initialState = {
     remove: {
         status: '',
         error: -1
+    },
+    edit: {
+        status: '',
+        error: -1,
+        newMemo: undefined
     }
 };
 
@@ -23,6 +28,8 @@ export default function memo(state, action) {
     if(typeof state === 'undefined') {
         state = initialState;
     }
+
+    let index;
 
     switch(action.type) {
         /* MEMO_POST */
@@ -100,7 +107,7 @@ export default function memo(state, action) {
                 }
             });
 
-        /* MEMO REOVE */
+        /* MEMO REMOVE */
         case types.MEMO_REMOVE:
             return update(state, {
                 remove: {
@@ -122,7 +129,7 @@ export default function memo(state, action) {
                 }
             });
         case types.MEMO_REMOVE_FROM_DATA:
-            let index = state.list.dataMap.indexOf(action.id);
+            index = state.list.dataMap.indexOf(action.id);
             return update(state, {
                 list: {
                     data: {
@@ -131,6 +138,36 @@ export default function memo(state, action) {
                     dataMap: {
                         $splice: [[index, 1]]
                     }
+                }
+            });
+
+        /* EDIT */
+        case types.MEMO_EDIT:
+            return update(state, {
+                edit: {
+                    status: { $set: 'WAITING' },
+                    error: { $set: -1 },
+                    newMemo: { $set: undefined }
+                }
+            });
+        case types.MEMO_EDIT_SUCCESS:
+            index = state.list.dataMap.indexOf(acion.id);
+            return update(state, {
+                edit: {
+                    status: { $set: 'SUCCESS' },
+                    newMemo: { $set: action.memo }
+                },
+                list: {
+                    data: {
+                        [index]: { $set: action.memo }
+                    }
+                }
+            });
+        case types.MEMO_EDIT_FAILURE:
+            return update(state, {
+                edit: {
+                    status: { $set : 'FAILURE' },
+                    error: { $set: action.error }
                 }
             });
         default:
