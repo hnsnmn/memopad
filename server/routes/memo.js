@@ -40,6 +40,14 @@ router.post('/', (req, res) => {
 // MODIFY MEMO
 router.put('/:id', (req, res) => {
 
+    // CHECK CONTENTS VALID
+    if(typeof res.body.contents === 'undefined' || res.body.contents === "") {
+        return res.status(400).json({
+            error: "EMPTY CONTENTS",
+            code: 0
+        });
+    }
+
     // CHECK MEMO ID VALIDITY
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).json({
