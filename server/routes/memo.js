@@ -98,7 +98,6 @@ router.put('/:id', (req, res) => {
 
 // DELETE MEMO
 router.delete('/:id', (req, res) => {
-
     // CHECK MEMO ID VALIDITY
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).json({
