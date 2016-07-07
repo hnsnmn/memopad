@@ -1,26 +1,80 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TimeAgo from 'react-timeago';
+import { memoRemoveRequest, memoRemoveFromData } from 'actions/memo';
 
 class Memo extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            isRemoving: false
+        };
+        this.handleRemove = this.handleRemove.bind(this);
+    }
+
+    handleRemove() {
+        this.props.dispatch(memoRemoveRequest(this.props.data._id)).then(
+            () => {
+                if(this.props.remove.status === 'SUCCESS') {
+                    Materialize.toast('Your memo is gone!', 2000);
+
+                    this.setState({
+                        isRemoving: true
+                    });
+
+                    // RUN 500 ms LATER (ANIMATION DURATION)
+                    setTimeout(() => {
+                        $(this.card).slideUp(500, () => {
+                            this.props.dispatch(memoRemoveFromData(this.props.data._id));
+                        });
+                    }, 500);
+
+                } else {
+                    // 0 INVALID ID 1 NOT LOGGED IN 2 MEMO NOT FOUND 3 THATS NOT YOUR MEMO
+                    let message;
+                    switch(this.props.remove.error) {
+                        case 0:
+                            message = 'Something is wrong with the memo';
+                            break;
+                        case 1:
+                            message = 'You are not logged in';
+                            break;
+                        case 2:
+                            message = 'That memo does not exist';
+                            break;
+                        case 3:
+                            message = 'That is not your memo';
+                            break;
+                        default:
+                            message = "Something's gone wrong";
+                    }
+
+                    let $toastContent = $('<span style="color: #FFB4BA">' + message + '</span>');
+                    Materialize.toast($toastContent, 2000);
+                }
+            }
+        );
+    }
+
     render() {
 
-        let action = (this.props.data.is_edited) ? 'edited' : 'wrote';
-
+        // SHOW POST OPTIONS WHEN IT BELONGS TO THE USER
         let postOptionsVisibility = (this.props.data.writer == this.props.currentUser) ? 'visible' : 'hidden';
 
+        // RENDERING CONTENT FOR POST OPTIONS
         let postOptions = (this.props.data.writer === this.props.currentUser) ? (
             <div className="right">
                 <a className='dropdown-button' id={'dropdown-button-'+this.props.data._id} data-activates={'dropdown-'+this.props.data._id}><i className="material-icons icon-button">more_vert</i></a>
 
                 <ul id={'dropdown-'+this.props.data._id} className='dropdown-content'>
                   <li><a>Edit</a></li>
-                  <li><a>Remove</a></li>
+                  <li><a onClick={this.handleRemove}>Remove</a></li>
                 </ul>
             </div>
         ) : '';
 
+        // MAKE CONTENTS TO MULTILINED CONTENTS BY REPLACING \n TO BR TAG
         let multiLineContents = this.props.data.contents.split('\n').map(
                 (line, i) => {
                     return (
@@ -29,16 +83,20 @@ class Memo extends React.Component {
                 }
         );
 
+        // VARIABLE FOR STAR COUNT
         let starCount = this.props.data.starred.length;
 
+        // IF IT IS STARRED ( CHECKS WHETHER THE NICKNAME EXISTS IN THE ARRAY )
+        // RETURN STYLE THAT HAS A YELLOW COLOR
         let isStarred = (this.props.data.starred.indexOf(this.props.currentUser) > -1) ? { color: '#ff9980' } : {} ;
 
 
+
         return(
-            <div className="container memo fade-and-slide">
+            <div ref={(ref)=>{this.card = ref;}} className={'container memo ' + (this.state.isRemoving ? 'memo-fade-out' : 'memo-fade-in' ) }>
                 <div className="card">
                     <div className="info">
-                        <span className="username">{this.props.data.writer}</span> {action} a log · <TimeAgo date={this.props.data.date.edited} live={true}/>
+                        <span className="username">{this.props.data.writer}</span> wrote a log · <TimeAgo date={this.props.data.date.created} live={true}/>
                         {postOptions}
                     </div>
                     <div className="card-content">
@@ -52,7 +110,24 @@ class Memo extends React.Component {
         );
     }
 
+    componentDidUpdate() {
+        // WHEN COMPONENT UPDATES, INITIALIZE DROPDOWN
+        // (TRIGGERED WHEN LOGGED IN)
+        $('#dropdown-button-'+this.props.data._id).dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrain_width: false, // Does not change width of dropdown to that of the activator
+            hover: false, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: true, // Displays dropdown below the button
+            alignment: 'left' // Displays dropdown with edge aligned to the left of button
+        });
+
+    }
+
     componentDidMount() {
+        // WHEN COMPONENT MOUNTS, INITIALIZE DROPDOWN
+        // (TRIGGERED WHEN REFRESHED)
         $('#dropdown-button-'+this.props.data._id).dropdown({
             inDuration: 300,
             outDuration: 225,
@@ -70,21 +145,9 @@ class Memo extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        currentUser: state.authentication.status.currentUser
+        currentUser: state.authentication.status.currentUser,
+        remove: state.memo.remove
     };
 };
-export default connect(mapStateToProps)(Memo);
 
-/*
-{
-    "_id": "577a64ff950f069406ec9f98",
-    "writer": "velo",
-    "contents": "i can't take my eyes~~~~ of .. you!\nhey\nhey\nhey",
-    "__v": 0,
-    "date": {
-      "edited": "2016-07-04T13:30:39.082Z",
-      "created": "2016-07-04T13:30:39.082Z"
-    },
-    "starred": ['velo', 'anymore', 'pert']
-  }
-*/
+export default connect(mapStateToProps)(Memo);
