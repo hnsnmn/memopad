@@ -147,12 +147,15 @@ export function memoRemoveFromData(id) {
 /* EDIT */
 export function memoEditRequest(id, contents) {
     return (dispatch) => {
-        return axios.put('/api/memo/' + id).then(
+        return axios.put('/api/memo/' + id, {
+            contents
+        }).then(
             (response) => {
-                return dispatch(memoEditeSuccess(id, response.data.memo));
+                return dispatch(memoEditSuccess(id, response.data.memo));
             }
         ).catch(
             (error) => {
+                console.log(error);
                 return dispatch(memoEditFailure(error.data.code));
             }
         );
