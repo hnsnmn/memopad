@@ -175,7 +175,7 @@ export function memoEditSuccess(id, memo) {
 
 export function memoEditFailure(error) {
     return {
-        type: MEMO_EDIT_FAILUEE,
+        type: MEMO_EDIT_FAILURE,
         error
     };
 }
