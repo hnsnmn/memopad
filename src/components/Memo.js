@@ -8,9 +8,14 @@ class Memo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isRemoving: false
+            isRemoving: false,
+            isEdit: false,
+            value: props.data.contents
         };
         this.handleRemove = this.handleRemove.bind(this);
+        this.toggleEdit = this.toggleEdit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
     handleRemove() {
@@ -25,6 +30,7 @@ class Memo extends React.Component {
 
                     // RUN 500 ms LATER (ANIMATION DURATION)
                     setTimeout(() => {
+                        // USE JQUERY BECAUSE USING MAX-HEIGHT IN DYNAMIC ELEMENT IS QUITE BUGGY
                         $(this.card).slideUp(500, () => {
                             this.props.dispatch(memoRemoveFromData(this.props.data._id));
                         });
@@ -57,6 +63,22 @@ class Memo extends React.Component {
         );
     }
 
+    toggleEdit() {
+        this.setState({
+            isEdit: !this.state.isEdit
+        });
+    }
+
+    handleChange(e) {
+        this.setState({
+            value: e.target.value
+        });
+    }
+
+    handleEdit() {
+        this.toggleEdit();
+    }
+
     render() {
 
         // SHOW POST OPTIONS WHEN IT BELONGS TO THE USER
@@ -68,7 +90,7 @@ class Memo extends React.Component {
                 <a className='dropdown-button' id={'dropdown-button-'+this.props.data._id} data-activates={'dropdown-'+this.props.data._id}><i className="material-icons icon-button">more_vert</i></a>
 
                 <ul id={'dropdown-'+this.props.data._id} className='dropdown-content'>
-                  <li><a>Edit</a></li>
+                  <li><a onClick={this.toggleEdit}>Edit</a></li>
                   <li><a onClick={this.handleRemove}>Remove</a></li>
                 </ul>
             </div>
@@ -90,22 +112,42 @@ class Memo extends React.Component {
         // RETURN STYLE THAT HAS A YELLOW COLOR
         let isStarred = (this.props.data.starred.indexOf(this.props.currentUser) > -1) ? { color: '#ff9980' } : {} ;
 
+        let memoView = (
+            <div className="card">
+                <div className="info">
+                    <span className="username">{this.props.data.writer}</span> wrote a log · <TimeAgo date={this.props.data.date.created} live={true}/>
+                    {postOptions}
+                </div>
+                <div className="card-content">
+                    {multiLineContents}
+                </div>
+                <div className="footer">
+                    <i className="material-icons log-footer-icon star icon-button" style={isStarred}>star</i><span className="star-count">{starCount}</span>
+                </div>
+            </div>
+        );
+
+        let editView = (
+            <div className="write">
+                <div className="card">
+                    <div className="card-content">
+                        <textarea className="materialize-textarea"
+                            value={this.state.value}
+                            onChange={this.handleChange}>
+                        </textarea>
+                    </div>
+                    <div className="card-action">
+                      <a onClick={this.handleEdit}>OK</a>
+                    </div>
+                </div>
+            </div>
+        );
+
 
 
         return(
             <div ref={(ref)=>{this.card = ref;}} className={'container memo ' + (this.state.isRemoving ? 'memo-fade-out' : 'memo-fade-in' ) }>
-                <div className="card">
-                    <div className="info">
-                        <span className="username">{this.props.data.writer}</span> wrote a log · <TimeAgo date={this.props.data.date.created} live={true}/>
-                        {postOptions}
-                    </div>
-                    <div className="card-content">
-                        {multiLineContents}
-                    </div>
-                    <div className="footer">
-                        <i className="material-icons log-footer-icon star icon-button" style={isStarred}>star</i><span className="star-count">{starCount}</span>
-                    </div>
-                </div>
+                {this.state.isEdit ? editView : memoView }
             </div>
         );
     }
