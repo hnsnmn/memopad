@@ -9,12 +9,15 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.handleMemoList.bind(this);
+        this.loadWhenNoScroll = this.loadWhenNoScroll.bind(this);
         this.state = {
             loadingState: false
         };
     }
+
     componentDidMount() {
 
+        // LOADS THE NEW MEMO EVERY 5 SECONDS
         let getNewMemo = () => {
             this.handleMemoList('new');
             this.memoLoaderTimeoutId = setTimeout(getNewMemo, 5000);
@@ -26,6 +29,7 @@ class Home extends React.Component {
             () => {
                 // LOAD OLDER MEMO WHEN SCROLLED
                 $(window).scroll(() => {
+                    // WHEN HEIGHT UNDER SCROLLBOTTOM IS LESS THEN 250
                     if ($(document).height() - $(window).height() - $(window).scrollTop() < 250) {
                         if(!this.state.loadingState) {
                             this.setState({loadingState: true});
@@ -37,9 +41,7 @@ class Home extends React.Component {
                 });
 
                 // IF THERE IS NO SCROLLBAR, LOAD ONE MORE PAGE
-                if ($("body").height() < $(window).height()) {
-                    this.handleMemoList('old');
-                }
+                this.loadWhenNoScroll();
 
                 // LOAD NEWER MEO EVERY 5 SECONDS
                 getNewMemo();
@@ -49,14 +51,31 @@ class Home extends React.Component {
 
     }
 
+    // LOADS MORE MEMO WHEN THERE IS NO SCROLL BAR IN THE DOCUMENT
+    loadWhenNoScroll() {
+        if ($("body").height() < $(window).height()) {
+            this.props.dispatch(memoListRequest(false, 'old', this.props.data[this.props.data.length-1]._id)).
+            then(
+                () => {
+                    // DO THIS RECURSIVELY
+                    this.loadWhenNoScroll();
+                }
+            );
+
+        }
+    }
+
+
     handleMemoList(listType) {
         if(listType == 'old') {
+            // LOAD OLD MEMOS
             if(this.props.isLast) {
                 Materialize.toast('You are now reading the last memo', 2000);
                 return;
             }
             this.props.dispatch(memoListRequest(false, 'old', this.props.data[this.props.data.length-1]._id));
         } else {
+            // LOAD NEW MEMOS
             this.props.dispatch(memoListRequest(false, 'new', this.props.data[0]._id));
         }
     }
@@ -68,6 +87,14 @@ class Home extends React.Component {
                     <MemoList data={this.props.data}/>
             </div>
         );
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        // DETECT MEMO REMOVAL
+        if(prevProps.data.length > this.props.data.length) {
+            console.log("DELETED");
+            this.loadWhenNoScroll();
+        }
     }
 
     componentWillUnmount() {
