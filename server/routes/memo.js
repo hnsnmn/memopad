@@ -44,7 +44,7 @@ router.put('/:id', (req, res) => {
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).json({
             error: "INVALID ID",
-            code: 0
+            code: 1
         });
     }
 
@@ -52,7 +52,7 @@ router.put('/:id', (req, res) => {
     if(typeof req.session.loginInfo === 'undefined') {
         return res.status(403).json({
             error: "NOT LOGGED IN",
-            code: 1
+            code: 2
         });
     }
 
