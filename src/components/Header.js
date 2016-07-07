@@ -15,6 +15,8 @@ class Header extends React.Component {
         this.props.dispatch(logoutRequest()).then(
             () => {
                 Materialize.toast('Good Bye!', 2000);
+
+                // EMPTIES THE SESSION OBJECT STORED IN COOKIE
                 let loginData = {
                     isLoggedIn: false,
                     username: ''
