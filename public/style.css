@@ -29,6 +29,10 @@ a.logo {
     color: #5B5B5B;
 }
 
+a {
+    cursor: pointer;
+}
+
 .auth .card {
     width: 400px;
     margin: 0 auto;
@@ -65,11 +69,6 @@ a.logo {
 }
 
 
-
-/* Write */
-.write {
-    margin-top: 30px;
-}
 
 .write .materialize-textarea {
     padding: 0px;
@@ -186,7 +185,7 @@ a.logo {
 
 .memo-fade-out {
     opacity: 0;
-    
+
     -webkit-animation-duration: 0.5s;
     animation-duration: 0.5s;
     -webkit-animation-name: memo-fade-out;
