@@ -16,6 +16,7 @@ class Memo extends React.Component {
         this.toggleEdit = this.toggleEdit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
     handleRemove() {
@@ -108,6 +109,13 @@ class Memo extends React.Component {
         );
     }
 
+    handleKeyDown(e) {
+        if( e.ctrlKey && e.keyCode == 13) {
+            console.log("CTRL+ENTER is PRESSED");
+            this.handleEdit();
+        }
+    }
+
     render() {
 
         // SHOW POST OPTIONS WHEN IT BELONGS TO THE USER
@@ -134,6 +142,13 @@ class Memo extends React.Component {
                 }
         );
 
+        // EDITED info
+        let editedInfo = (
+            <span style={{color: '#AAB5BC'}}> · Edited <TimeAgo date={this.props.data.date.edited} live={true}/></span>
+        );
+
+
+
         // VARIABLE FOR STAR COUNT
         let starCount = this.props.data.starred.length;
 
@@ -145,7 +160,7 @@ class Memo extends React.Component {
             <div className="card">
                 <div className="info">
                     <span className="username">{this.props.data.writer}</span> wrote a log · <TimeAgo date={this.props.data.date.created} live={true}/>
-                    {postOptions}
+                    {this.props.data.is_edited ? editedInfo : '' }{postOptions}
                 </div>
                 <div className="card-content">
                     {multiLineContents}
@@ -162,7 +177,8 @@ class Memo extends React.Component {
                     <div className="card-content">
                         <textarea className="materialize-textarea"
                             value={this.state.value}
-                            onChange={this.handleChange}>
+                            onChange={this.handleChange}
+                            onKeyDown={this.handleKeyDown}>
                         </textarea>
                     </div>
                     <div className="card-action">
