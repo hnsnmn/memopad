@@ -85,10 +85,11 @@ router.put('/:id', (req, res) => {
         memo.contents = req.body.contents;
         memo.date.edited = new Date();
         memo.is_edited = true;
-        memo.save(err => {
+        memo.save((err, memo) => {
             if(err) throw err;
             return res.json({
-                success: true
+                success: true,
+                memo
             });
         });
 
