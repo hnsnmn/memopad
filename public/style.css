@@ -137,27 +137,58 @@ a.logo {
 }
 
 /* ANIMATION */
-@-webkit-keyframes fade-and-slide {
+@-webkit-keyframes memo-fade-in {
     0% {
-      opacity: 0.25;
+      opacity: 0;
     }
     100% {
       opacity: 1;
     }
 }
 
-@keyframes fade-and-slide {
+@keyframes memo-fade-in {
     0% {
-      opacity: 0.25;
+      opacity: 0;
     }
     100% {
       opacity: 1;
     }
 }
 
-.fade-and-slide {
-    -webkit-animation-duration: 1.5s;
-    animation-duration: 1.5s;
-    -webkit-animation-name: fade-and-slide;
-    animation-name: fade-and-slide;
+.memo-fade-in {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-name: memo-fade-in;
+    animation-name: memo-fade-in;
+}
+
+
+/* ANIMATION */
+@-webkit-keyframes memo-fade-out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+       -webkit-transform: translateX(100px);
+    }
+}
+
+@keyframes memo-fade-out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+}
+
+.memo-fade-out {
+    opacity: 0;
+    
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-name: memo-fade-out;
+    animation-name: memo-fade-out;
 }
