@@ -9,7 +9,8 @@ import {
     MEMO_LIST_FAILURE,
     MEMO_REMOVE,
     MEMO_REMOVE_SUCCESS,
-    MEMO_REMOVE_FAILURE
+    MEMO_REMOVE_FAILURE,
+    MEMO_REMOVE_FROM_DATA
 } from './ActionTypes';
 
 
@@ -96,14 +97,13 @@ export function memoListFailure(error) {
 export function memoRemoveRequest(id) {
     return (dispatch) => {
         dispatch(memoRemove(id));
-
         return axios.delete('/api/memo/' + id).then(
             (response) => {
-                dispatch(memoRemoveSuccess(id));
+                return dispatch(memoRemoveSuccess(id));
             }
         ).catch(
             (error) => {
-                dispatch(memoRemoveFailure(error.data.code));
+                return dispatch(memoRemoveFailure(error.data.code));
             }
         );
     };
@@ -115,10 +115,11 @@ export function memoRemove() {
     };
 }
 
-export function memoRemoveSuccess(id) {
+export function memoRemoveSuccess(id, memoPos) {
     return {
         type: MEMO_REMOVE_SUCCESS,
-        id
+        id,
+        memoPos
     };
 }
 
@@ -126,5 +127,15 @@ export function memoRemoveFailure(error) {
     return {
         type: MEMO_REMOVE_FAILURE,
         error
+    };
+}
+
+/* SEPARATED, BECAUSE WHEN MEMO IS REMOVED FROM MEMOREMOVE,
+  COMPONENT CANNOT CHECK WHETHER THE REQUEST HAS SUCCEED OR NOT
+  SINCE IT UNMOUNTS AS THE DATA GETS REMOVED FROM THE STATE */
+export function memoRemoveFromData(id) {
+    return {
+        type: MEMO_REMOVE_FROM_DATA,
+        id
     };
 }
