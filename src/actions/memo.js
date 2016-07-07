@@ -10,7 +10,10 @@ import {
     MEMO_REMOVE,
     MEMO_REMOVE_SUCCESS,
     MEMO_REMOVE_FAILURE,
-    MEMO_REMOVE_FROM_DATA
+    MEMO_REMOVE_FROM_DATA,
+    MEMO_EDIT,
+    MEMO_EDIT_SUCCESS,
+    MEMO_EDIT_FAILURE
 } from './ActionTypes';
 
 
@@ -137,5 +140,34 @@ export function memoRemoveFromData(id) {
     return {
         type: MEMO_REMOVE_FROM_DATA,
         id
+    };
+}
+
+
+/* EDIT */
+export function memoEditRequest() {
+    return (dispatch) => {
+
+    };
+}
+
+export function memoEdit() {
+    return {
+        type: MEMO_EDIT
+    };
+}
+
+export function memoEditSuccess(id, memo) {
+    return {
+        type: MEMO_EDIT_SUCCESS,
+        id,
+        memo
+    };
+}
+
+export function memoEditFailure(error) {
+    return {
+        type: MEMO_EDIT_FAILUEE,
+        error
     };
 }
