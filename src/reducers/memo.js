@@ -15,7 +15,7 @@ const initialState = {
     },
     remove: {
         status: '',
-        error: undefined
+        error: -1
     }
 };
 
@@ -86,19 +86,53 @@ export default function memo(state, action) {
                         list: {
                             status: { $set: 'SUCCESS' },
                             data: { $unshift: action.data },
-                            dataMap: { $push: map }
+                            dataMap: { $unshift: map }
                         }
                     });
                 }
             }
             return state;
+        case types.MEMO_LIST_FAILURE:
+            return update(state, {
+                list: {
+                    status: { $set: 'FAILURE '},
+                    error: { $set: action.error }
+                }
+            });
 
+        /* MEMO REOVE */
         case types.MEMO_REMOVE:
-            return state;
+            return update(state, {
+                remove: {
+                    status: { $set: 'WAITING' },
+                    error: { $set: -1 }
+                }
+            });
         case types.MEMO_REMOVE_SUCCESS:
-            return state;
+            return update(state, {
+                remove: {
+                    status: { $set: 'SUCCESS' },
+                },
+            });
         case types.MEMO_REMOVE_FAILURE:
-            return state;
+            return update(state, {
+                remove: {
+                    status: { $set: 'FAILURE' },
+                    error: { $set: action.error }
+                }
+            });
+        case types.MEMO_REMOVE_FROM_DATA:
+            let index = state.list.dataMap.indexOf(action.id);
+            return update(state, {
+                list: {
+                    data: {
+                        $splice: [[index, 1]],
+                    },
+                    dataMap: {
+                        $splice: [[index, 1]]
+                    }
+                }
+            });
         default:
             return state;
     }
