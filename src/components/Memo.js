@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TimeAgo from 'react-timeago';
-import { memoRemoveRequest, memoRemoveFromData, memoEditRequest } from 'actions/memo';
+import { memoRemoveRequest, memoRemoveFromData, memoEditRequest, memoStarRequest } from 'actions/memo';
 
 class Memo extends React.Component {
 
@@ -17,6 +17,7 @@ class Memo extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleToggleStar = this.handleToggleStar.bind(this);
     }
 
     handleRemove() {
@@ -83,7 +84,8 @@ class Memo extends React.Component {
                     this.toggleEdit();
                 } else {
 
-                    let message;
+                    let message = '';
+
                     switch(this.props.remove.error) {
                         case 0:
                             message = 'Please write something';
@@ -110,10 +112,38 @@ class Memo extends React.Component {
     }
 
     handleKeyDown(e) {
-        if( e.ctrlKey && e.keyCode == 13) {
-            console.log("CTRL+ENTER is PRESSED");
+        if(e.ctrlKey && e.keyCode == 13) {
             this.handleEdit();
         }
+    }
+
+    handleToggleStar() {
+        this.props.dispatch(memoStarRequest(this.props.data._id)).then(
+            () => {
+                if(this.props.star.status !== 'SUCCESS') {
+
+                    let message = '';
+
+                    switch (this.props.star.error) {
+                        case 0:
+                            message = "Something is wrong with your request";
+                            break;
+                        case 1:
+                            message = "You are not logged in";
+                            break;
+                        case 2:
+                            message = "That memo does not exist anymore";
+                            break;
+                        default:
+                            mesage = "Something's gone wrong";
+                    }
+
+                    let $toastContent = $('<span style="color: #FFB4BA">' + message + '</span>');
+                    Materialize.toast($toastContent, 2000);
+
+                }
+            }
+        );
     }
 
     render() {
@@ -166,7 +196,7 @@ class Memo extends React.Component {
                     {multiLineContents}
                 </div>
                 <div className="footer">
-                    <i className="material-icons log-footer-icon star icon-button" style={isStarred}>star</i><span className="star-count">{starCount}</span>
+                    <i className="material-icons log-footer-icon star icon-button" style={isStarred} onClick={this.handleToggleStar}>star</i><span className="star-count">{starCount}</span>
                 </div>
             </div>
         );
@@ -234,7 +264,8 @@ const mapStateToProps = (state) => {
     return {
         currentUser: state.authentication.status.currentUser,
         remove: state.memo.remove,
-        edit: state.memo.edit
+        edit: state.memo.edit,
+        star: state.memo.star
     };
 };
 

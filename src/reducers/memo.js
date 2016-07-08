@@ -21,6 +21,11 @@ const initialState = {
         status: '',
         error: -1,
         newMemo: undefined
+    },
+    star: {
+        status: '',
+        error: -1,
+        memo: undefined
     }
 };
 
@@ -167,6 +172,32 @@ export default function memo(state, action) {
             return update(state, {
                 edit: {
                     status: { $set : 'FAILURE' },
+                    error: { $set: action.error }
+                }
+            });
+
+        case types.MEMO_STAR:
+            return update(state, {
+                star: {
+                    status: { $set: 'WAITING' }
+                }
+            });
+        case types.MEMO_STAR_SUCCESS:
+            index = state.list.dataMap.indexOf(action.id);
+            return update(state, {
+                star: {
+                    status: { $set: 'SUCCESS' },
+                },
+                list: {
+                    data: {
+                        [index]: { $set: action.memo }
+                    }
+                }
+            });
+        case types.MEMO_STAR_FAILURE:
+            return update(state, {
+                star: {
+                    status: { $set: 'FAILURE' },
                     error: { $set: action.error }
                 }
             });
