@@ -191,3 +191,30 @@ a {
     -webkit-animation-name: memo-fade-out;
     animation-name: memo-fade-out;
 }
+
+.search-screen {
+    position: fixed;
+    overflow-y: auto;
+    left: 0px;
+    top: 0px;
+    height:100vh;
+    width:100%;
+    overflow:auto; /* or overflow:auto; if you want scrollbars */
+    background-color: rgba(0, 0, 0, 0.70);
+    z-index: 99;
+    display: none;
+}
+
+.search-screen input {
+    text-align: center;
+    font-size: 50px;
+    line-height: 80px;
+    margin-top: 200px;
+    height: 80px;
+    font-weight: 200;
+}
+
+.search-screen .btn {
+    margin-top: 14px;
+    margin-right: 20px;
+}

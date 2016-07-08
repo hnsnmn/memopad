@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Header } from 'components';
+import { Header, Search } from 'components';
 
 import { getStatusRequest } from 'actions/authentication';
 
@@ -58,6 +58,7 @@ class App extends React.Component {
                 <div className="wrapper">
                     { this.props.children }
                 </div>
+                { this.props.searchMode ? <Search/> : ''}
             </div>
         );
     }
@@ -65,7 +66,8 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        check: state.authentication.status.check
+        check: state.authentication.status.check,
+        searchMode: state.search.show
     };
 };
 

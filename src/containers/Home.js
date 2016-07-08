@@ -85,6 +85,7 @@ class Home extends React.Component {
             <div>
                     { this.props.isLoggedIn ? ( <Write/> ) : (<div/>) }
                     <MemoList data={this.props.data}/>
+
             </div>
         );
     }

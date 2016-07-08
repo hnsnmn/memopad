@@ -3,12 +3,18 @@ import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logoutRequest } from 'actions/authentication';
+import { searchToggle } from 'actions/search';
 
 class Header extends React.Component {
 
     constructor(props) {
         super(props);
+        this.toggleSearch = this.toggleSearch.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    toggleSearch() {
+        this.props.dispatch(searchToggle());
     }
 
     handleLogout() {
@@ -50,7 +56,7 @@ class Header extends React.Component {
                     <Link to="/" className="brand-logo center">MEMOPAD</Link>
 
                     <ul>
-                        <li><a href="#"><i className="material-icons">search</i></a></li>
+                        <li><a onClick={this.toggleSearch}><i className="material-icons">search</i></a></li>
                     </ul>
 
                     <div className="right">
