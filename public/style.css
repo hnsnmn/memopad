@@ -218,3 +218,22 @@ a {
     margin-top: 14px;
     margin-right: 20px;
 }
+
+ul.search-results {
+    text-align: center;
+    font-size: 30px;
+    margin-top: 0px;
+}
+
+.search-results li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-results li + li {
+    border-top: 1px solid #5F5F5F;
+}
+
+.search-results li:hover {
+    background-color: rgba(255, 255, 255, 0.10);
+}
