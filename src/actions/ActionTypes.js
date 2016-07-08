@@ -39,3 +39,6 @@ export const MEMO_STAR_FAILURE = "MEMO_STAR_FAILURE";
 
 /* SEARCH */
 export const SEARCH_TOGGLE = "SEARCH_TOGGLE";
+export const SEARCH = "SEARCH";
+export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+export const SEARCH_FAILURE = "SEARCH_FAILURE";
