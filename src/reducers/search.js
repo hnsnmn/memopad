@@ -26,7 +26,7 @@ export default function search(state, action) {
                 status: { $set: 'SUCCESS' },
                 usernames: { $set: action.usernames }
             });
-        case types.SEARCH_ERROR:
+        case types.SEARCH_FAILURE:
             return update(state, {
                 status: { $set: 'ERROR' }
             });
