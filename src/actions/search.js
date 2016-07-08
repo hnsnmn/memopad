@@ -16,7 +16,7 @@ export function searchToggle() {
 export function searchRequest(username) {
     return (dispatch) => {
         dispatch(search);
-        axios.get('/api/account/search' + username)
+        axios.get('/api/account/search/' + username)
         .then(
             (response) => {
                 dispatch(searchSuccess(response.data));
