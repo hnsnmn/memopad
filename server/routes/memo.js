@@ -223,4 +223,59 @@ router.get('/list/new/:id', (req, res) => {
 
 });
 
+
+// TOGGLES THE STAR OF THE MEMO
+router.post('/star/:id', (req, res) => {
+    // CHECK MEMO ID VALIDITY
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 0
+        });
+    }
+
+    // CHECK LOGIN STATUS
+    if(typeof req.session.loginInfo === 'undefined') {
+        return res.status(403).json({
+            error: "NOT LOGGED IN",
+            code: 1
+        });
+    }
+
+    // FIND MEMO AND CHECK FOR WRITER
+    Memo.findById(req.params.id, (err, memo) => {
+        if(err) throw err;
+
+        if(!memo) {
+            return res.status(404).json({
+                error: "NO RESOURCE",
+                code: 2
+            });
+        }
+
+        // GET INDEX OF USERNAME IN THE ARRAY
+        let index = memo.starred.indexOf(req.session.loginInfo.username);
+
+        let hasStarred = (index === -1) ? false : true;
+
+        if(!hasStarred) {
+            // IF IT DOES NOT EXIST
+            memo.starred.push(req.session.loginInfo.username);
+        } else {
+            // ALREADY starred
+            memo.starred.splice(index, 1);
+        }
+
+        // SAVE THE MEMO
+        memo.save((err, memo) => {
+            if(err) throw err;
+            res.json({
+                success: true,
+                'has_starred': !hasStarred,
+                memo,
+            });
+        });
+    });
+});
+
 export default router;
