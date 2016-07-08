@@ -85,13 +85,23 @@ router.get('/getinfo', (req, res) => {
             error: 1
         });
     }
-    
+
     res.json({ info: req.session.loginInfo });
 });
 
 router.post('/logout', (req, res) => {
     req.session.destroy(err => { if(err) throw err; });
     return res.json({ sucess: true });
+});
+
+router.get('/search/:username', (req, res) => {
+    var re = new RegExp('^' + req.params.username);
+    Account.find({username: {$regex: re}}, {_id: false, username: true})
+    .limit(5)
+    .exec((err, accounts) => {
+        if(err) throw err;
+        res.json(accounts);
+    });
 });
 
 
