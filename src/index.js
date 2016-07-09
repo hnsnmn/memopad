@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
-import { App, Login, Register, Home } from 'containers';
+import { App, Login, Register, Home, Wall } from 'containers';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from 'reducers';
@@ -21,6 +21,7 @@ ReactDOM.render(
                 <Route path="home" component={Home}/>
                 <Route path="login" component={Login}/>
                 <Route path="register" component={Register}/>
+                <Route path="user/:username" component={Wall}/>
             </Route>
         </Router>
     </Provider>, rootElement);

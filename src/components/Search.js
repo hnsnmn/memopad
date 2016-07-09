@@ -35,7 +35,7 @@ class Search extends React.Component {
         let mapToResults = (data) => {
             console.log(data);
             return data.map((username, i) => {
-                return (<li key={i}>{username.username}</li>);
+                return (<a key={i}>{username.username}</a>);
             });
         };
 
