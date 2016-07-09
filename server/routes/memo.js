@@ -223,6 +223,81 @@ router.get('/list/new/:id', (req, res) => {
 
 });
 
+// GET MEMO LIST OF A USER
+router.get('/list/:user', (req, res) => {
+    /*
+    Memo.find((err, memos) => {
+        if(err) throw err;
+        res.json(memos);
+    });
+    */
+    Memo.find({writer: req.params.user})
+    .sort({"_id": -1})
+    .limit(6)
+    .exec((err, memos) => {
+        if(err) throw err;
+        res.json(memos);
+    });
+
+});
+
+
+// GET OLDER MEMO LIST OF A USER
+router.get('/list/old/:user/:id', (req, res) => {
+    /*
+    Memo.find((err, memos) => {
+        if(err) throw err;
+        res.json(memos);
+    });
+    */
+    // CHECK MEMO ID VALIDITY
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 0
+        });
+    }
+
+    let objId = new mongoose.Types.ObjectId(req.params.id);
+
+    Memo.find({
+        _id: { $lt: objId },
+        writer: req.params.user
+    })
+    .sort({_id: -1})
+    .limit(6)
+    .exec((err, memos) => {
+        if(err) throw err;
+        res.json(memos);
+    });
+
+});
+
+
+// GET NEWER MEMO LIST OF A USER
+router.get('/list/new/:user/:id', (req, res) => {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            error: "INVALID ID",
+            code: 0
+        });
+    }
+
+    let objId = new mongoose.Types.ObjectId(req.params.id);
+
+    Memo.find({
+        _id: { $gt: objId },
+        writer: req.params.user
+    })
+    .sort({_id: -1})
+    .limit(6)
+    .exec((err, memos) => {
+        if(err) throw err;
+        res.json(memos);
+    });
+
+});
+
 
 // TOGGLES THE STAR OF THE MEMO
 router.post('/star/:id', (req, res) => {
