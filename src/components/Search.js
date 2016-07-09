@@ -1,17 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { searchToggle } from 'actions/search';
+import { searchToggle, searchRequest } from 'actions/search';
 
 
 class Search extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            keyword: ''
+        };
         this.handleClose = this.handleClose.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
         $(this.screen).slideDown();
+    }
+
+    handleChange(e) {
+        this.setState({ keyword: e.target.value });
+        this.props.dispatch(searchRequest(e.target.value));
     }
 
     handleClose() {
@@ -22,6 +31,14 @@ class Search extends React.Component {
     }
 
     render() {
+
+        let mapToResults = (data) => {
+            console.log(data);
+            return data.map((username, i) => {
+                return (<li key={i}>{username.username}</li>);
+            });
+        };
+
         return (
             <div ref={(ref) => { this.screen = ref; } } className="search-screen white-text">
                 <div className="right">
@@ -29,15 +46,26 @@ class Search extends React.Component {
                         onClick={this.handleClose}>CLOSE</a>
                 </div>
                 <div className="container">
-                    <input placeholder="Search a user"></input>
+                    <input placeholder="Search a user"
+                        value={this.state.keyword}
+                        onChange={this.handleChange}></input>
+
+                    <ul className="search-results">
+                        {mapToResults(this.props.search.usernames)}
+                    </ul>
+
+
                 </div>
             </div>
         );
     }
 
-    componentWillUnmount() {
-
-    }
-
 }
-export default connect()(Search);
+
+const mapStateToProps = (state) => {
+    return {
+        search: state.search
+    };
+};
+
+export default connect(mapStateToProps)(Search);

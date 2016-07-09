@@ -16,6 +16,14 @@ export function searchToggle() {
 export function searchRequest(username) {
     return (dispatch) => {
         dispatch(search);
+
+        if(username==='') {
+            return new Promise((resolve, reject)=> {
+                dispatch(searchSuccess([]));
+                resolve();
+            });
+        }
+
         return axios.get('/api/account/search/' + username)
         .then(
             (response) => {
@@ -46,6 +54,6 @@ export function searchSuccess(usernames) {
 
 export function searchError() {
     return {
-        type: SEARCH_ERROR
+        type: SEARCH_FAILURE
     };
 }
