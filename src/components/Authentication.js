@@ -41,7 +41,7 @@ class Authentication extends React.Component {
                             username: this.props.currentUser
                         };
 
-                        // SETS THE COOKIE 
+                        // SETS THE COOKIE
                         document.cookie= 'key=' + btoa(JSON.stringify(loginData));
 
                         Materialize.toast('Welcome, ' + this.props.currentUser + '!', 2000);
@@ -52,7 +52,6 @@ class Authentication extends React.Component {
                         this.setState({
                             password: ''
                         });
-                        this.loginPassword.focus();
                     }
                 }
             );
@@ -108,9 +107,6 @@ class Authentication extends React.Component {
                             label="Password"
                             value={this.state.password}
                             onChange={this.handleChange}
-                            ref= { (ref) => {
-                                this.loginPassword = ref;
-                            }}
                             onKeyPress={this.handleKeyPress}/>
                         <a className="waves-effect waves-light btn" onClick={this.handleClick}>SUBMIT</a>
                     </Row>
