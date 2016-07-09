@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { searchToggle, searchRequest } from 'actions/search';
+import { Link } from 'react-router';
 
 
 class Search extends React.Component {
@@ -35,7 +36,9 @@ class Search extends React.Component {
         let mapToResults = (data) => {
             console.log(data);
             return data.map((username, i) => {
-                return (<a key={i}>{username.username}</a>);
+                return (<Link to={`/user/${username.username}`}
+                    key={i}
+                    onClick={this.handleClose}>{username.username}</Link>);
             });
         };
 
