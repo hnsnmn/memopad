@@ -8,7 +8,7 @@ class Home extends React.Component {
 
     constructor(props) {
         super(props);
-        this.handleMemoList.bind(this);
+        this.handleMemoList = this.handleMemoList.bind(this);
         this.loadWhenNoScroll = this.loadWhenNoScroll.bind(this);
         this.state = {
             loadingState: false
@@ -41,13 +41,14 @@ class Home extends React.Component {
                 });
 
                 // IF THERE IS NO SCROLLBAR, LOAD ONE MORE PAGE
-                this.loadWhenNoScroll();
+                if(!this.props.isLast) {
+                    this.loadWhenNoScroll();
+                }
 
                 // LOAD NEWER MEO EVERY 5 SECONDS
                 getNewMemo();
             }
         );
-
 
     }
 
@@ -93,7 +94,6 @@ class Home extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         // DETECT MEMO REMOVAL
         if(prevProps.data.length > this.props.data.length) {
-            console.log("DELETED");
             this.loadWhenNoScroll();
         }
     }

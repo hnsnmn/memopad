@@ -59,14 +59,18 @@ export function memoPostFailure(error) {
 
 /* MEMO LIST */
 
-export function memoListRequest(isInitial, listType, id){
+export function memoListRequest(isInitial, listType, id, user){
     return (dispatch) => {
 
         dispatch(memoList());
 
         let url = '/api/memo/list';
 
-        url = isInitial ? url : url + '/' + listType + '/' + id;
+        if(typeof user === 'undefined')
+            url = isInitial ? url : url + '/' + listType + '/' + id;
+        else
+            url = isInitial ? url + '/' + user : url + '/' + listType + '/' + user + '/' + id;
+
 
         return axios.get(url)
         .then((response) => {

@@ -34,12 +34,19 @@ class Write extends React.Component {
                         return this.props.dispatch(memoListRequest(false, 'new', this.props.data[0]._id));
                     }};
 
-                    reload().then( ()=> {
+                    if(this.props.listStatus !== 'WAITING') {
+                        reload().then( ()=> {
+                            Materialize.toast('Posted Successfully!', 2000);
+                            this.setState({
+                                contents: ""
+                            });
+                        });
+                    } else {
                         Materialize.toast('Posted Successfully!', 2000);
                         this.setState({
                             contents: ""
                         });
-                    });
+                    }
                 } else {
                     let $toastContent;
 
@@ -68,7 +75,6 @@ class Write extends React.Component {
 
     handleKeyDown(e) {
         if( e.ctrlKey && e.keyCode == 13) {
-            console.log("CTRL+ENTER is PRESSED");
             this.handleClick();
         }
     }
@@ -100,7 +106,8 @@ const mapStateToProps = (state) => {
     return {
         status: state.memo.post.status,
         error: state.memo.post.error,
-        data: state.memo.list.data
+        data: state.memo.list.data,
+        listStatus: state.memo.list.status
     };
 };
 

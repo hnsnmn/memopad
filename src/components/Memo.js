@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TimeAgo from 'react-timeago';
 import { memoRemoveRequest, memoRemoveFromData, memoEditRequest, memoStarRequest } from 'actions/memo';
+import { Link } from 'react-router';
 
 class Memo extends React.Component {
 
@@ -189,7 +190,7 @@ class Memo extends React.Component {
         let memoView = (
             <div className="card">
                 <div className="info">
-                    <span className="username">{this.props.data.writer}</span> wrote a log · <TimeAgo date={this.props.data.date.created} live={true}/>
+                    <Link className="username" to={`/user/${this.props.data.writer}`}>{this.props.data.writer}</Link> wrote a log · <TimeAgo date={this.props.data.date.created} live={true}/>
                     {this.props.data.is_edited ? editedInfo : '' }{postOptions}
                 </div>
                 <div className="card-content">
