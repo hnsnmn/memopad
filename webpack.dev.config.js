@@ -7,8 +7,7 @@ module.exports = {
         './src/index.js',
         'webpack-dev-server/client?http://0.0.0.0:4000',
         'webpack/hot/only-dev-server',
-        './public/style.css',
-        'materialize-css/dist/css/materialize.min.css'
+        './public/style.css'
     ],
 
     output: {

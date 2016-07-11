@@ -16,10 +16,6 @@
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.2",
     "express-session": "^1.13.0",
-    "file-loader": "^0.9.0",
-    "hammerjs": "^2.0.8",
-    "jquery": "^3.1.0",
-    "materialize-css": "^0.97.6",
     "mongoose": "^4.5.2",
     "path": "^0.12.7",
     "react": "^15.1.0",
@@ -31,10 +27,7 @@
     "react-router-redux": "^4.0.5",
     "react-timeago": "^3.0.0",
     "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0",
-    "url-loader": "^0.5.7",
-    "velocity": "^0.7.2",
-    "velocity-animate": "^1.2.3"
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.9.1",
@@ -46,6 +39,8 @@
     "react-hot-loader": "^1.3.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "url-loader": "^0.5.7",
+    "file-loader": "^0.9.0"
   }
 }
