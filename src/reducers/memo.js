@@ -201,6 +201,12 @@ export default function memo(state, action) {
                     error: { $set: action.error }
                 }
             });
+        case types.MEMO_CLEAR:
+            return update(state, {
+                list: {
+                    data: { $set: [] }
+                }
+            });
         default:
             return state;
     }

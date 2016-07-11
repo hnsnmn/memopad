@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoList } from 'components';
 import { connect } from 'react-redux';
-import { memoListRequest } from 'actions/memo';
+import { memoListRequest, memoClear } from 'actions/memo';
 
 
 class Wall extends React.Component {
@@ -45,14 +45,12 @@ class Wall extends React.Component {
                     }
                 });
 
-                // IF THERE IS NO SCROLLBAR, LOAD ONE MORE PAGE
                 if(!this.props.isLast) {
-                    //this.loadWhenNoScroll();
+                    // IF THERE IS NO SCROLLBAR, LOAD ONE MORE PAGE
+                    this.loadWhenNoScroll();
+                    // LOAD NEWER MEO EVERY 5 SECONDS
+                    getNewMemo();
                 }
-
-
-                // LOAD NEWER MEMO EVERY 5 SECONDS
-                getNewMemo();
             }
         );
 
@@ -129,6 +127,7 @@ class Wall extends React.Component {
 
             $(window).unbind();
             clearTimeout(this.memoLoaderTimeoutId);
+            this.props.dispatch(memoClear());
 
             this.setState({
                 initiallyLoaded: false
@@ -141,6 +140,8 @@ class Wall extends React.Component {
     componentWillUnmount() {
         $(window).unbind();
         clearTimeout(this.memoLoaderTimeoutId);
+
+        this.props.dispatch(memoClear());
     }
 }
 

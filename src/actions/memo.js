@@ -16,7 +16,8 @@ import {
     MEMO_EDIT_FAILURE,
     MEMO_STAR,
     MEMO_STAR_SUCCESS,
-    MEMO_STAR_FAILURE
+    MEMO_STAR_FAILURE,
+    MEMO_CLEAR
 } from './ActionTypes';
 
 
@@ -226,5 +227,11 @@ export function memoStarFailure(error) {
     return {
         type: MEMO_STAR_FAILURE,
         error
+    };
+}
+
+export function memoClear() {
+    return {
+        type: MEMO_CLEAR
     };
 }
