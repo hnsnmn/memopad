@@ -25,14 +25,14 @@ module.exports = {
             "*": "http://localhost:3000"
         },
         stats: {
-          // Config for minimal console.log mess.
-          assets: false,
-          colors: true,
-          version: false,
-          hash: false,
-          timings: false,
-          chunks: false,
-          chunkModules: false
+            // Config for minimal console.log mess.
+            assets: false,
+            colors: true,
+            version: false,
+            hash: false,
+            timings: false,
+            chunks: false,
+            chunkModules: false
         }
     },
 
@@ -52,10 +52,9 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-              test: /\.css$/,
-              loader: 'style!css-loader'
-          },
-          { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
+                test: /\.css$/,
+                loader: 'style!css-loader'
+            }
         ]
     },
 

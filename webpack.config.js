@@ -22,12 +22,25 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-              test: /\.css$/,
-              loader: 'style!css-loader'
-          },
-                      { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
+                test: /\.css$/,
+                loader: 'style!css-loader'
+            }
         ]
     },
+
+
+      plugins:[
+        new webpack.DefinePlugin({
+          'process.env':{
+            'NODE_ENV': JSON.stringify('production')
+          }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+          compress:{
+            warnings: true
+          }
+        })
+    ],
 
 
     resolve: {
