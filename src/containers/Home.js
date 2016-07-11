@@ -59,7 +59,9 @@ class Home extends React.Component {
             then(
                 () => {
                     // DO THIS RECURSIVELY
-                    this.loadWhenNoScroll();
+                    if(!this.props.isLast){
+                        this.loadWhenNoScroll();
+                    }
                 }
             );
 
