@@ -12,7 +12,7 @@ import session from 'express-session';
 
 
 const app = express();
-const port = 12002;
+const port = 3000;
 const devPort = 4000;
 
 /* mongodb connection */
