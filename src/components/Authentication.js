@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {Row, Input, Button} from 'react-materialize';
 import { connect } from 'react-redux';
 import { loginRequest, registerRequest } from 'actions/authentication';
 
@@ -95,21 +94,29 @@ class Authentication extends React.Component {
         const loginView = (
             <div>
                 <div className="card-content">
-                    <Row>
-                        <Input s={12}
-                            name="username"
-                            label="Username"
-                            value={this.state.username}
-                            onChange={this.handleChange} />
-                        <Input s={12}
-                            name="password"
-                            type="password"
-                            label="Password"
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            onKeyPress={this.handleKeyPress}/>
+                    <div className="row">
+
+                        <div className="input-field col s12">
+                            <label for="username">Username</label>
+                            <input id="username"
+                                name="username"
+                                type="text"
+                                className="validate"
+                                value={this.state.username}
+                                onChange={this.handleChange}/>
+                        </div>
+                        <div className="input-field col s12">
+                            <label for="password">Password</label>
+                            <input id="password"
+                                name="password"
+                                type="password"
+                                className="validate"
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                onKeyPress={this.handleKeyPress}/>
+                        </div>
                         <a className="waves-effect waves-light btn" onClick={this.handleClick}>SUBMIT</a>
-                    </Row>
+                    </div>
                 </div>
 
 
@@ -126,27 +133,28 @@ class Authentication extends React.Component {
         const registerView = (
             <div>
                 <div className="card-content">
-                    <Row>
-                        <Input s={12}
-                            name="username"
-                            label="Username"
-                            value={this.state.username}
-                            onChange={this.handleChange}
-                            ref= { (ref) => {
-                                this.registerUsername = ref;
-                            }}/>
-                        <Input s={12}
-                            name="password"
-                            type="password"
-                            label="Password"
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            ref= { (ref) => {
-                                this.registerPassword = ref;
-                            }}
-                            onKeyPress={this.handleKeyPress}/>
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <label for="username">Username</label>
+                            <input id="username"
+                                name="username"
+                                type="text"
+                                className="validate"
+                                value={this.state.username}
+                                onChange={this.handleChange}/>
+                        </div>
+                        <div className="input-field col s12">
+                            <label for="password">Password</label>
+                            <input id="password"
+                                name="password"
+                                type="password"
+                                className="validate"
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                onKeyPress={this.handleKeyPress}/>
+                        </div>
                         <a className="waves-effect waves-light btn" onClick={this.handleClick}>CREATE</a>
-                    </Row>
+                    </div>
                 </div>
             </div>
         );

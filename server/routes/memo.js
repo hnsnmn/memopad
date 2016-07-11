@@ -8,6 +8,7 @@ const router = express.Router();
 // WRITE MEMO
 router.post('/', (req, res) => {
 
+
     // CHECK LOGIN STATUS
     if(typeof req.session.loginInfo === 'undefined') {
         return res.status(403).json({
@@ -16,10 +17,15 @@ router.post('/', (req, res) => {
         });
     }
 
-    // CHECK LOGIN STATUS
-    if(req.body.contents === "") {
+    // CHECK CONTENTS VALID
+    if(typeof req.body.contents === 'undefined') {
         return res.status(400).json({
-            error: "CONTENTS EMPTY",
+            error: "EMPTY CONTENTS",
+            code: 2
+        });
+    } else if(req.body.contents === "") {
+        return res.status(400).json({
+            error: "EMPTY CONTENTS",
             code: 2
         });
     }
