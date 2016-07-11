@@ -49,7 +49,7 @@ router.post('/signup', (req, res) => {
 
 router.post('/signin', (req, res) => {
 
-    if(typeof req.body.password === undefined) {
+    if(typeof req.body.password === "undefined") {
         return res.status(401).json({
             error: "LOGIN FAILED",
             code: 1
