@@ -36,11 +36,9 @@ export function loginRequest(username, password) {
             password
         }).then((response) => {
             // SUCCEED
-            console.log(response);
             return dispatch(loginSuccess(username));
         }).catch((error) => {
             // FAILED
-            console.log(error);
             return dispatch(loginFailure(error.data.code));
         });
     };
@@ -80,11 +78,9 @@ export function registerRequest(username, password) {
         return axios.post('/api/account/signup', {
             username, password
         }).then((response) => {
-            console.log(response);
-            return dispatch(registerSuccess(username));
+            dispatch(registerSuccess(username));
         }).catch((error) => {
-            console.log(error);
-            return dispatch(registerFailure(error.data.code));
+            dispatch(registerFailure(error.data.code));
         });
     };
 }
@@ -118,7 +114,7 @@ export function logoutRequest() {
     return (dispatch) => {
         return axios.post('/api/account/logout')
         .then((response) => {
-            return dispatch(logout());
+            dispatch(logout());
         });
     };
 }
@@ -141,9 +137,9 @@ export function getStatusRequest() {
 
         return axios.get('/api/account/getInfo')
         .then((response) => {
-            return dispatch(getStatusSuccess(response.data.info.username));
+            dispatch(getStatusSuccess(response.data.info.username));
         }).catch((error) => {
-            return dispatch(getStatusFailure());
+            dispatch(getStatusFailure());
         });
     };
 }

@@ -158,12 +158,11 @@ export function memoEditRequest(id, contents) {
             contents
         }).then(
             (response) => {
-                return dispatch(memoEditSuccess(id, response.data.memo));
+                dispatch(memoEditSuccess(id, response.data.memo));
             }
         ).catch(
             (error) => {
-                console.log(error);
-                return dispatch(memoEditFailure(error.data.code));
+                dispatch(memoEditFailure(error.data.code));
             }
         );
     };
@@ -202,7 +201,6 @@ export function memoStarRequest(id) {
             }
         ).catch(
             (error) => {
-                console.log(error);
                 dispatch(memoStarFailure(error.data.code));
             }
         );
