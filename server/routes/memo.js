@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
             error: "EMPTY CONTENTS",
             code: 2
         });
-    } else if(req.body.contents === "") {
+    } else if(req.body.contents === "" || req.body.contents === null) {
         return res.status(400).json({
             error: "EMPTY CONTENTS",
             code: 2
@@ -52,7 +52,7 @@ router.put('/:id', (req, res) => {
             error: "EMPTY CONTENTS",
             code: 0
         });
-    } else if(req.body.contents === "") {
+    } else if(req.body.contents === "" || req.body.contents === null) {
         return res.status(400).json({
             error: "EMPTY CONTENTS",
             code: 0
