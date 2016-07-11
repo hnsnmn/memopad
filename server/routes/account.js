@@ -48,6 +48,19 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/signin', (req, res) => {
+
+    if(typeof req.body.password === undefined) {
+        return res.status(401).json({
+            error: "LOGIN FAILED",
+            code: 1
+        });
+    } else if (req.body.password === null) {
+        return res.status(401).json({
+            error: "LOGIN FAILED",
+            code: 1
+        });
+    }
+
     /* to be implemented */
     Account.findOne({ username: req.body.username}, (err, account) => {
         if(err) throw err;
