@@ -27,7 +27,6 @@ class App extends React.Component {
         // if it is not logged in, do nothing
         if(!loginData.isLoggedIn) return;
 
-        console.log(loginData);
         this.props.dispatch(getStatusRequest()).then(
             () => {
                 if(!this.props.check) {
